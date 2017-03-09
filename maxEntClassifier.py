@@ -3,6 +3,21 @@
 # Winter 2017 Final Project
 # CS 321: Artificial Intelligence
 
+'''
+
+def load_data(filename):
+     return preprocess.processData(filename)
+
+def maxEnt():
+    data = load_data(filename()
+
+    # First, Calculate empirical distributions.
+    empiricals = dict()
+    for
+
+
+'''
+
 
 
 
