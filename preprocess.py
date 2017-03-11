@@ -36,7 +36,7 @@ def getStrings(filename):
 
 
 def createVector(str):
-    vec = np.zeros(34)
+    vec = np.zeros(51)
     data = str.split(", ")
     ageFeat = int(data[0].strip()) // 10
     vec[ageFeat] = 1
@@ -46,7 +46,11 @@ def createVector(str):
     education = ["Bachelors", "Some-college", "11th", "HS-grad", "Prof-school", "Assoc-acdm", "Assoc-voc", "9th", "7th-8th", "12th", "Masters", "1st-4th", "10th", "Doctorate", "5th-6th", "Preschool"]
     edFeat = 18 + education.index(data[3].strip())
     vec[edFeat] = 1
-    label = int(data[-1].strip() == '>50K')
+    ednumFeat = 34 + int(data[4].strip())
+    vec[ednumFeat] = 1
+    vec[edFeat] = 1
+    label = int(data[-1].strip() == ">50K")
+
     return (vec, label)
 
 
