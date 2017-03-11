@@ -120,6 +120,7 @@ def processData(filename):
 
 def main():
     process_out_null_values("testing.txt", "testData.txt")
+    process_out_null_values("adult.data.txt", "processData.txt")
     strs = getStrings("processData.txt")
     # result = create_Feature_Vectors(strs)
     capital_loss = return_Feature_Space(strs, 11)
