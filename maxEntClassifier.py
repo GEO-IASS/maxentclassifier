@@ -102,7 +102,11 @@ def maxEnt(features):
 
 
 def main():
-    maxEnt()
+    if len(sys.argv) == 1:
+        allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss"]
+        maxEnt(allFeatures)
+    else:
+        maxEnt(sysv.args[1:])
 
 if __name__ == "__main__":
     main()
