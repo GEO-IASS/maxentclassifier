@@ -49,7 +49,7 @@ def getStrings(filename):
 # 74-75: Capital Gain < or > 5000
 # 76-77: Capital Loss < or > 1750
 
-def createVector(str):
+def createVector(age = False, workclass = False, education = False, numYearsEducation = False, m_status = False, job_title = False, cap_gain = False, cap_loss = False):
     vec = np.zeros(78)
     data = str.split(", ")
     ageFeat = int(data[0].strip()) // 10
@@ -91,6 +91,7 @@ def createVector(str):
     label = int(data[-1].strip().rstrip(".") == ">50K")
 
     return (vec, label)
+
 
 def return_Feature_Space(strings, index):
     values = []
