@@ -88,7 +88,7 @@ def createVector(str):
     # sex_feat = 84 + sexes.index(data[9].strip())
     # vec[sex_feat] = 1
 
-    label = int(data[-1].strip() == ">50K")
+    label = int(data[-1].strip() == ">50K.")
 
     return (vec, label)
 
@@ -120,6 +120,7 @@ def processData(filename):
 
 def main():
     process_out_null_values("testing.txt", "testData.txt")
+    process_out_null_values("adult.data.txt", "processData.txt")
     strs = getStrings("processData.txt")
     # result = create_Feature_Vectors(strs)
     capital_loss = return_Feature_Space(strs, 11)

@@ -90,20 +90,6 @@ def maxEnt():
     testTraining(testingData, testingLabels, weights0, weights1)
 
 
-
-
-
-
-def classifyingProb(feature_vector, V, weights):
-    prob_class_one = (np.exp(np.dot(weights, feature_vector)))
-    prob_class_two = (np.exp(weights[-1] * V))
-    normalize_constant = prob_class_one + prob_class_two
-
-    prob_class_one = prob_class_one/normalize_constant
-    prob_class_two = prob_class_two/normalize_constant
-
-    return (prob_class_one, prob_class_two)
-
 def main():
     maxEnt()
 
