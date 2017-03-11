@@ -8,8 +8,8 @@ def process_out_null_values(filename_original, filename_output):
 
                 # if " ?" in line.split(","):
                 #    print(line)
-
-                if not " ?" in line.split(","):
+                line_list = line.split(",")
+                if not " ?" in line_list:
                     w.write(line)
 
                     # else:
@@ -88,7 +88,7 @@ def createVector(str):
     # sex_feat = 84 + sexes.index(data[9].strip())
     # vec[sex_feat] = 1
 
-    label = int(data[-1].strip() == ">50K.")
+    label = int(data[-1].strip().rstrip(".") == ">50K")
 
     return (vec, label)
 
