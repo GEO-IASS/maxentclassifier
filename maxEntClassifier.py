@@ -10,8 +10,8 @@ warnings.filterwarnings('error')
 
 
 
-def load_data(filename):
-     return preprocess.processData(filename)
+def load_data(filename, features):
+     return preprocess.processData(filename,features)
 
 
 def getEmpiricals(instances, labels):
@@ -48,7 +48,7 @@ def testTraining(instances, labels, weights0, weights1):
 
 
 
-def maxEnt():
+def maxEnt(features):
 
     def update():
         model0 = np.zeros(F)
@@ -94,7 +94,7 @@ def maxEnt():
         # print(weights1)
         # print()
     print(weights0, weights1)
-    
+
     print("Testing on training data:")
     testTraining(instances, labels, weights0, weights1)
     print("Testing on test data")
