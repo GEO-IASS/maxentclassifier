@@ -53,12 +53,16 @@ def getStrings(filename):
 
 # Input: a list of the features we will be adding to the feature vector
 
+features = [age, workclass, education, education-num, marital-status, occupation, capital-gain, capital-loss]
 def createVector(str,feature_args):
-
-    vec = np.zeros(78)
     data = str.split(", ")
-    ageFeat = int(data[0].strip()) // 10
-    vec[ageFeat] = 1
+    vec = np.empty()
+    if "age" in feature_args:
+        np.append(np.zeros(10))
+        ageFeat = int(data[0].strip()) // 10
+        vec[ageFeat] = 1
+    vec = np.zeros(78)
+
     workclasses = ["Private", "Self-emp-not-inc", "Self-emp-inc", "Federal-gov", "Local-gov", "State-gov", "Without-pay", "Never-worked"]
     classFeat = 10 + workclasses.index(data[1].strip())
     vec[classFeat] = 1
