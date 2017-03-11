@@ -44,10 +44,11 @@ def getStrings(filename):
 # 59-73: Job Title
 # 74-83: Hours-per-week (removed)
 # 84-85: Sex (removed)
-# 74-75: Capital Gain < or > 3500
+# 74-75: Capital Gain < or > 5000
+# 76-77: Capital Loss < or > 1750
 
 def createVector(str):
-    vec = np.zeros(76)
+    vec = np.zeros(78)
     data = str.split(", ")
     ageFeat = int(data[0].strip()) // 10
     vec[ageFeat] = 1
@@ -72,6 +73,8 @@ def createVector(str):
     cap_gain_feat = 74 + int(int(data[10].strip()) > 5000)
     vec[cap_gain_feat] = 1
 
+    cap_loss_feat = 76 + int(int(data[11].strip()) > 1750)
+    vec[cap_loss_feat] = 1
 
 
     # These two features actually reduced classification probability so I removed them.
@@ -117,17 +120,17 @@ def main():
     #process_out_null_values()
     strs = getStrings("processData.txt")
     # result = create_Feature_Vectors(strs)
-    capital_gain = return_Feature_Space(strs, 10 )
-    print(sorted(capital_gain))
+    capital_loss = return_Feature_Space(strs, 11)
+    print(sorted(capital_loss))
     greater_3500 = 0
-    for i in range(len(capital_gain)):
-        if int(capital_gain[i]) > 3500:
+    for i in range(len(capital_loss)):
+        if int(capital_loss[i]) > 1900:
             greater_3500 += 1
-        capital_gain[i] = int(capital_gain[i])
+        capital_loss[i] = int(capital_loss[i])
     print(greater_3500)
 
-    print("Average: ", sum(capital_gain)/len(capital_gain))
-    print(len(capital_gain))
+    print("Average: ", sum(capital_loss)/len(capital_loss))
+    print(len(capital_loss))
 
 
 
