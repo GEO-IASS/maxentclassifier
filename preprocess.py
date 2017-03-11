@@ -41,6 +41,9 @@ def getStrings(filename):
 # 18-33: Education
 # 34-51: Years of Education
 # 52-58: Marital Status
+# 59-73: Job Title
+# 74-83: Hours-per-week (removed)
+# 84-85: Sex (removed)
 
 def createVector(str):
     vec = np.zeros(73)
@@ -64,6 +67,15 @@ def createVector(str):
     job_titles = ['Adm-clerical', 'Exec-managerial', 'Handlers-cleaners', 'Prof-specialty', 'Other-service', 'Sales', 'Transport-moving', 'Farming-fishing', 'Machine-op-inspct', 'Tech-support', 'Craft-repair', 'Protective-serv', 'Armed-Forces', 'Priv-house-serv']
     job_title_feat = 59 + job_titles.index(data[6].strip())
     vec[job_title_feat] = 1
+
+    # These two features actually reduced classification probability so I removed them.
+
+    # hourspw_feat = 74 + int(data[12].strip()) // 10
+    # vec[hourspw_feat] = 1
+    #
+    # sexes = ["Female", "Male"]
+    # sex_feat = 84 + sexes.index(data[9].strip())
+    # vec[sex_feat] = 1
 
     label = int(data[-1].strip() == ">50K")
 
@@ -99,8 +111,8 @@ def main():
     #process_out_null_values()
     strs = getStrings("processData.txt")
     # result = create_Feature_Vectors(strs)
-    job_titles = return_Feature_Space(strs, 6)
-    print(len(job_titles))
+    hours_per_week = return_Feature_Space(strs, 12)
+    print(sorted(hours_per_week))
 
 
     #Testing that our data outputs as expected...
