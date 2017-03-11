@@ -38,16 +38,15 @@ def getStrings(filename):
 def createVector(str):
     vec = np.zeros(34)
     data = str.split(", ")
-    ageFeat = int(data[0]) // 10
+    ageFeat = int(data[0].strip()) // 10
     vec[ageFeat] = 1
     workclasses = ["Private", "Self-emp-not-inc", "Self-emp-inc", "Federal-gov", "Local-gov", "State-gov", "Without-pay", "Never-worked"]
-    classFeat = 10 + workclasses.index(data[1])
+    classFeat = 10 + workclasses.index(data[1].strip())
     vec[classFeat] = 1
     education = ["Bachelors", "Some-college", "11th", "HS-grad", "Prof-school", "Assoc-acdm", "Assoc-voc", "9th", "7th-8th", "12th", "Masters", "1st-4th", "10th", "Doctorate", "5th-6th", "Preschool"]
-    edFeat = 18 + education.index(data[3])
+    edFeat = 18 + education.index(data[3].strip())
     vec[edFeat] = 1
-    label = int(data[-1] == '>50K')
-
+    label = int(data[-1].strip() == '>50K')
     return (vec, label)
 
 
@@ -56,7 +55,6 @@ def create_Feature_Vectors(inputStrings):
     labelList = []
 
     for line in inputStrings:
-        #print(line)
         vec, label = createVector(line)
         vectorList.append(vec)
         labelList.append(label)
@@ -69,7 +67,13 @@ def processData(filename):
 def main():
     #process_out_null_values()
     strs = getStrings("processData.txt")
-    print(create_Feature_Vectors(strs))
+    result = create_Feature_Vectors(strs)
+
+    # Testing that our data outputs as expected...
+    # result = create_Feature_Vectors(strs)
+    # with open("output.txt", "a") as f:
+    #     for item in result:
+    #         f.write(str(item))
 
 if __name__ == "__main__":
     main()
