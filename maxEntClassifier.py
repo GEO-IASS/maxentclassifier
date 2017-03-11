@@ -42,7 +42,7 @@ def testTraining(instances, labels, weights0, weights1):
     N = len(instances)
     for i in range(N):
         prob1 = getProbs(instances[i], weights0, weights1)[1]
-        guess = int(prob1 >= .5)
+        guess = int(prob1 > .5)
         correct += (guess == labels[i])
     print(correct/N)
 
@@ -79,6 +79,7 @@ def maxEnt():
     weights0 = np.ones(F)
     weights1 = np.ones(F)
     testingData, testingLabels = load_data("testData.txt")
+    #print(testingLabels)
     testTraining(testingData, testingLabels, weights0, weights1)
     for j in range(20):
         update()
@@ -87,7 +88,7 @@ def maxEnt():
         # print()
         # print(weights1)
         # print()
-    testTraining(testingData, testingLabels, weights0, weights1)
+    testTraining(instances, labels, weights0, weights1)
 
 
 
