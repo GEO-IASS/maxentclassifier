@@ -4,21 +4,23 @@
 # CS 321: Artificial Intelligence
 
 import numpy as np
-
+import preprocess
 
 
 def load_data(filename):
-     return preprocess.processData(filename)
+     return preprocess.processData("processData.txt")
+
+
+
+
 
 def maxEnt():
-    data = load_data(filename())
+    instances, labels = load_data(filename())
+    V = sum(instances[0])
+    N = len(instances)
     length = len(data[[0]-1)
     V = 13
-    slack_vector = np.zeros(length + 1)
-    slack_vector[-1] = V
 
-
-    # First, Calculate empirical distributions.
     empiricals = np.zeros(length+1)
     for trainingInstance in data:
         # if class is 1:
@@ -50,10 +52,3 @@ def classifyingProb(feature_vector, V, weights):
     prob_class_two = prob_class_two/normalize_constant
 
     return (prob_class_one, prob_class_two)
-
-
-
-
-
-
-
