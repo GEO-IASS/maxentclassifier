@@ -49,7 +49,11 @@ def getStrings(filename):
 # 74-75: Capital Gain < or > 5000
 # 76-77: Capital Loss < or > 1750
 
-def createVector(age = False, workclass = False, education = False, numYearsEducation = False, m_status = False, job_title = False, cap_gain = False, cap_loss = False):
+
+
+# Input: a list of the features we will be adding to the feature vector
+def createVector(feature_args):
+
     vec = np.zeros(78)
     data = str.split(", ")
     ageFeat = int(data[0].strip()) // 10
