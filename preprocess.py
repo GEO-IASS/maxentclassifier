@@ -46,9 +46,10 @@ def getStrings(filename):
 # 59-73: Job Title
 # 74-83: Hours-per-week (removed)
 # 84-85: Sex (removed)
+# 74-75: Capital Gain < or > 3500
 
 def createVector(str):
-    vec = np.zeros(73)
+    vec = np.zeros(76)
     data = str.split(", ")
     ageFeat = int(data[0].strip()) // 10
     vec[ageFeat] = 1
@@ -69,6 +70,11 @@ def createVector(str):
     job_titles = ['Adm-clerical', 'Exec-managerial', 'Handlers-cleaners', 'Prof-specialty', 'Other-service', 'Sales', 'Transport-moving', 'Farming-fishing', 'Machine-op-inspct', 'Tech-support', 'Craft-repair', 'Protective-serv', 'Armed-Forces', 'Priv-house-serv']
     job_title_feat = 59 + job_titles.index(data[6].strip())
     vec[job_title_feat] = 1
+
+    cap_gain_feat = 74 + int(int(data[10].strip()) > 5000)
+    vec[cap_gain_feat] = 1
+
+
 
     # These two features actually reduced classification probability so I removed them.
 
@@ -116,6 +122,19 @@ def main():
     # result = create_Feature_Vectors(strs)
     #hours_per_week = return_Feature_Space(strs, 12)
     #print(sorted(hours_per_week))
+
+    capital_gain = return_Feature_Space(strs, 10 )
+    print(sorted(capital_gain))
+    greater_3500 = 0
+    for i in range(len(capital_gain)):
+        if int(capital_gain[i]) > 3500:
+            greater_3500 += 1
+        capital_gain[i] = int(capital_gain[i])
+    print(greater_3500)
+
+    print("Average: ", sum(capital_gain)/len(capital_gain))
+    print(len(capital_gain))
+
 
 
     #Testing that our data outputs as expected...
