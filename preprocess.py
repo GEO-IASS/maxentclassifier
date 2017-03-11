@@ -2,8 +2,9 @@ def process_out_null_values():
     with open("adult.data.txt") as f:
 
         with open("processData.txt", "w") as w:
-
+            count = 0
             for line in f:
+                count +=1
 
                 # if " ?" in line.split(","):
                 #    print(line)
@@ -14,6 +15,7 @@ def process_out_null_values():
                     # else:
 
                     #    print(line.split(","))
+            print(count)
 
 '''
 We are splitting data up as follows:
@@ -109,10 +111,11 @@ def processData(filename):
 
 def main():
     #process_out_null_values()
-    strs = getStrings("processData.txt")
+    process_out_null_values()
+    #strs = getStrings("processData.txt")
     # result = create_Feature_Vectors(strs)
-    hours_per_week = return_Feature_Space(strs, 12)
-    print(sorted(hours_per_week))
+    #hours_per_week = return_Feature_Space(strs, 12)
+    #print(sorted(hours_per_week))
 
 
     #Testing that our data outputs as expected...
