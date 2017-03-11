@@ -2,8 +2,9 @@ def process_out_null_values():
     with open("adult.data.txt") as f:
 
         with open("processData.txt", "w") as w:
-
+            count = 0
             for line in f:
+                count +=1
 
                 # if " ?" in line.split(","):
                 #    print(line)
@@ -14,6 +15,7 @@ def process_out_null_values():
                     # else:
 
                     #    print(line.split(","))
+            print(count)
 
 '''
 We are splitting data up as follows:
@@ -118,10 +120,13 @@ def processData(filename):
 
 def main():
     #process_out_null_values()
-    strs = getStrings("processData.txt")
+    process_out_null_values()
+    #strs = getStrings("processData.txt")
     # result = create_Feature_Vectors(strs)
     capital_loss = return_Feature_Space(strs, 11)
     print(sorted(capital_loss))
+
+
     greater_3500 = 0
     for i in range(len(capital_loss)):
         if int(capital_loss[i]) > 1900:
