@@ -78,7 +78,8 @@ def maxEnt():
     emp0, emp1 = getEmpiricals(instances, labels)
     weights0 = np.ones(F)
     weights1 = np.ones(F)
-    testTraining(instances, labels, weights0, weights1)
+    testingData, testingLabels = load_data("testing.txt")
+    testTraining(testingData, testingLabels, weights0, weights1)
     for j in range(20):
         update()
         # print(testTraining(instances, labels, weights0, weights1))
@@ -86,7 +87,7 @@ def maxEnt():
         # print()
         # print(weights1)
         # print()
-    testTraining(instances, labels, weights0, weights1)
+    testTraining(testingData, testingLabels, weights0, weights1)
 
 
 
