@@ -80,6 +80,11 @@ def maxEnt():
     weights1 = np.ones(F)
     testingData, testingLabels = load_data("testData.txt")
     #print(testingLabels)
+
+    print("Testing on training data:")
+    testTraining(instances, labels, weights0, weights1)
+    print("Testing on test data")
+
     testTraining(testingData, testingLabels, weights0, weights1)
     for j in range(20):
         update()
@@ -89,6 +94,10 @@ def maxEnt():
         # print(weights1)
         # print()
     print(weights0, weights1)
+    
+    print("Testing on training data:")
+    testTraining(instances, labels, weights0, weights1)
+    print("Testing on test data")
     testTraining(testingData, testingLabels, weights0, weights1)
 
 
