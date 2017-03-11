@@ -1,7 +1,7 @@
-def process_out_null_values(filename):
-    with open(filename) as f:
+def process_out_null_values(filename_original, filename_output):
+    with open(filename_original) as f:
 
-        with open("processData.txt", "w") as w:
+        with open(filename_output, "w") as w:
             count = 0
             for line in f:
                 count +=1
@@ -119,7 +119,7 @@ def processData(filename):
     return create_Feature_Vectors(strs)
 
 def main():
-    # process_out_null_values("testing.txt")
+    process_out_null_values("testing.txt", "testData.txt")
     strs = getStrings("processData.txt")
     # result = create_Feature_Vectors(strs)
     capital_loss = return_Feature_Space(strs, 11)
