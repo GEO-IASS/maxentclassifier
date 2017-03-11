@@ -35,8 +35,15 @@ def getStrings(filename):
     return lines
 
 
+# Vector ranges are as follows:
+# 0-9: Age Ranges
+# 10-17: WorkClasses
+# 18-33: Education
+# 34-51: Years of Education
+# 52-58: Marital Status
+
 def createVector(str):
-    vec = np.zeros(51)
+    vec = np.zeros(73)
     data = str.split(", ")
     ageFeat = int(data[0].strip()) // 10
     vec[ageFeat] = 1
@@ -49,9 +56,29 @@ def createVector(str):
     ednumFeat = 34 + int(data[4].strip())
     vec[ednumFeat] = 1
     vec[edFeat] = 1
+
+    marital_statuses = ['Never-married', 'Married-civ-spouse', 'Divorced', 'Married-spouse-absent', 'Separated', 'Married-AF-spouse', 'Widowed']
+    marital_feat = 52 + marital_statuses.index(data[5].strip())
+    vec[marital_feat] = 1
+
+    job_titles = ['Adm-clerical', 'Exec-managerial', 'Handlers-cleaners', 'Prof-specialty', 'Other-service', 'Sales', 'Transport-moving', 'Farming-fishing', 'Machine-op-inspct', 'Tech-support', 'Craft-repair', 'Protective-serv', 'Armed-Forces', 'Priv-house-serv']
+    job_title_feat = 59 + job_titles.index(data[6].strip())
+    vec[job_title_feat] = 1
+
     label = int(data[-1].strip() == ">50K")
 
     return (vec, label)
+
+def return_Feature_Space(strings, index):
+    values = []
+    for line in strings:
+        features = line.split(",")
+        feature = features[index].strip()
+        if feature not in values:
+            values.append(feature)
+    return values
+
+
 
 
 def create_Feature_Vectors(inputStrings):
@@ -71,9 +98,12 @@ def processData(filename):
 def main():
     #process_out_null_values()
     strs = getStrings("processData.txt")
-    result = create_Feature_Vectors(strs)
+    # result = create_Feature_Vectors(strs)
+    job_titles = return_Feature_Space(strs, 6)
+    print(len(job_titles))
 
-    # Testing that our data outputs as expected...
+
+    #Testing that our data outputs as expected...
     # result = create_Feature_Vectors(strs)
     # with open("output.txt", "a") as f:
     #     for item in result:

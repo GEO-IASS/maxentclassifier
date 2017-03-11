@@ -14,7 +14,7 @@ def load_data(filename):
      return preprocess.processData(filename)
 
 
-def getEmpricals(instances, labels):
+def getEmpiricals(instances, labels):
 
     F = len(instances[0])
     N = len(instances)
@@ -75,43 +75,20 @@ def maxEnt():
     V = sum(instances[0])
     F = len(instances[0])
     N = len(instances)
-    emp0, emp1 = getEmpricals(instances, labels)
+    emp0, emp1 = getEmpiricals(instances, labels)
     weights0 = np.ones(F)
     weights1 = np.ones(F)
     testTraining(instances, labels, weights0, weights1)
     for j in range(20):
         update()
-        print(testTraining(instances, labels, weights0, weights1))
-        print(weights0)
-        print()
-        print(weights1)
-        print()
+        # print(testTraining(instances, labels, weights0, weights1))
+        # print(weights0)
+        # print()
+        # print(weights1)
+        # print()
     testTraining(instances, labels, weights0, weights1)
 
 
-
-
-    #length = len(data[[0]-1)
-    #V = 13
-
-    # empiricals = np.zeros(length+1)
-    # for trainingInstance in data:
-    #     # if class is 1:
-    #     if trainingInstance[-1] = 1:
-    #         for i in range(length):
-    #             empiricals[i] += trainingInstance[i]
-    #
-    #     else:
-    #         empiricals[-1] += V
-    #
-    # empiricals = empiricals * 1.0/len(data)
-    #
-    # weights = np.ones(len(empiricals))
-    #
-    # while not_converged():
-    #     E_p = 0
-    #     for instance in data:
-    #         E_p += classifyingProb(instance, V, weights)[0] *
 
 
 
