@@ -52,7 +52,8 @@ def getStrings(filename):
 
 
 # Input: a list of the features we will be adding to the feature vector
-def createVector(feature_args):
+
+def createVector(str,feature_args):
 
     vec = np.zeros(78)
     data = str.split(", ")
@@ -119,9 +120,9 @@ def create_Feature_Vectors(inputStrings):
         labelList.append(label)
     return (vectorList, labelList)
 
-def processData(filename):
+def processData(filename, features):
     strs = getStrings(filename)
-    return create_Feature_Vectors(strs)
+    return create_Feature_Vectors(strs, features)
 
 def main():
     process_out_null_values("testing.txt", "testData.txt")
