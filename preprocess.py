@@ -1,5 +1,5 @@
-def process_out_null_values():
-    with open("adult.data.txt") as f:
+def process_out_null_values(filename):
+    with open(filename) as f:
 
         with open("processData.txt", "w") as w:
             count = 0
@@ -119,9 +119,8 @@ def processData(filename):
     return create_Feature_Vectors(strs)
 
 def main():
-    #process_out_null_values()
-    process_out_null_values()
-    #strs = getStrings("processData.txt")
+    # process_out_null_values("testing.txt")
+    strs = getStrings("processData.txt")
     # result = create_Feature_Vectors(strs)
     capital_loss = return_Feature_Space(strs, 11)
     print(sorted(capital_loss))
