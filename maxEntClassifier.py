@@ -49,30 +49,29 @@ def testTraining(instances, labels, weights0, weights1):
     return correct/N
 
 
+def update(instances, weights0, weights1, V, F, N, emp0, emp1):
+    model0 = np.zeros(F)
+    model1 = np.zeros(F)
+    for instance in instances:
+        probs = getProbs(instance, weights0, weights1)
+        model0 = np.add(model0, instance * probs[0])
+        model1 = np.add(model1, instance * probs[1])
+    model0 /= N
+    model1 /= N
+    for i in range(F):
+        try:
+            weights0[i] = weights0[i] * (emp0[i] / model0[i])**(1/V)
+        except:
+            weights0[i] = 0
+        try:
+            weights1[i] = weights1[i] * (emp1[i] / model1[i])**(1/V)
+        except:
+            weights1[i] = 0
+
+    return weights0, weights1
+
 
 def maxEnt(features):
-
-    def update():
-        model0 = np.zeros(F)
-        model1 = np.zeros(F)
-        for instance in instances:
-            probs = getProbs(instance, weights0, weights1)
-            model0 = np.add(model0, instance * probs[0])
-            model1 = np.add(model1, instance * probs[1])
-        model0 /= N
-        model1 /= N
-        for i in range(F):
-            try:
-                weights0[i] = weights0[i] * (emp0[i] / model0[i])**(1/V)
-            except:
-                weights0[i] = 0
-            try:
-                weights1[i] = weights1[i] * (emp1[i] / model1[i])**(1/V)
-            except:
-                weights1[i] = 0
-        #weights0[0] = 0
-        #weights1[0] = 0
-
 
     print("MaxEnt Features: ", features)
     instances, labels = load_data("processData.txt", features)
@@ -85,10 +84,13 @@ def maxEnt(features):
     testingData, testingLabels = load_data("testData.txt", features)
     #print(testingLabels)
 
+    print("Weights0: ", weights0, "\n")
+    print("Weights1: ", weights1, "\n")
 
     beforeTesting = testTraining(testingData, testingLabels, weights0, weights1)
-    for j in range(20):
-        update()
+    otherbeforeTesting = testTraining(instances, labels, weights0, weights1)
+    for j in range(50):
+        weights0, weights1 = update(instances, weights0, weights1, V, F, N, emp0, emp1)
         # print(testTraining(instances, labels, weights0, weights1))
         # print(weights0)
         # print()
@@ -97,8 +99,9 @@ def maxEnt(features):
     print(weights0, weights1)
 
     afterTesting = testTraining(testingData, testingLabels, weights0, weights1)
+    otherafterTesting = testTraining(instances, labels, weights0, weights1)
 
-    return beforeTesting, afterTesting
+    return beforeTesting, afterTesting, otherbeforeTesting, otherafterTesting
 
 def compareEachFeature():
     allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
@@ -136,10 +139,16 @@ def main():
         allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss"]
         sig_features = ["workclass", "education", "education-num", "capital-gain", "capital-loss"]
         # sigbefore, sigafter = maxEnt(sig_features)
-        # allbefore, allafter = maxEnt(allFeatures)
+        allbefore, allafter, otherbefore, otherafter = maxEnt(allFeatures)
+
+        print("Test Before: ", allbefore, "\n")
+        print("Test After: ", allafter, "\n")
+        print("Training Before: ", otherbefore, "\n")
+        print("Training After: ", otherafter, "\n")
         # print("Significant Features: ", sigbefore, sigafter)
         # print("All Features: ", allbefore, allafter)
-        comparePairs()
+       # comparePairs()
+
 
 
         # compareEachFeature()
