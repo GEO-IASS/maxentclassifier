@@ -89,16 +89,25 @@ def createVector(strings, feature_args):
             occupation_feat = prev_leng + occupations.index(data[6].strip())
             vec[occupation_feat] = 1
 
+
         elif "capital-gain" == feature:
             prev_leng = len(vec)
             vec = np.append(vec, np.zeros(2))
-            cap_gain_feat = prev_leng + int(int(data[10].strip()) > 5000)
+            #Feature is 1 or 0 depending on whether greater than 3674.
+            #This is median value among nonzero capital gains.
+            #Overall median of capital gains was just 0
+            cap_gain_feat = prev_leng + int(int(data[10].strip()) > 3674)
+
             vec[cap_gain_feat] = 1
 
+        #
         elif "capital-loss" == feature:
             prev_leng = len(vec)
             vec = np.append(vec, np.zeros(2))
-            cap_loss_feat = prev_leng + int(int(data[11].strip()) > 1750)
+            #Feature is 1 or 0 depending on whether greater than 1876.
+            #This is median value among nonzero capital loss.
+            #Overall median of capital losses was just 0
+            cap_loss_feat = prev_leng + int(int(data[11].strip()) > 1876)
             vec[cap_loss_feat] = 1
 
         elif "sex" == feature:
