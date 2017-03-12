@@ -7,6 +7,7 @@ import numpy as np
 import preprocess
 import warnings
 import sys
+import os
 warnings.filterwarnings('error')
 
 
@@ -102,12 +103,14 @@ def compareEachFeature():
     allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
                    "capital-loss", "sex", "hours-per-week"]
 
+    if os.path.isfile("compareIndividualFeatures.txt"):
+        os.remove("compareIndividualFeatures.txt")
     with open("compareIndividualFeatures.txt", "a") as f:
         for feature in allFeatures:
             features = [feature]
-            results = maxEnt(features)
-            print("Feature: " + feature, results)
-            f.write(feature + " " + str(results[0]) + " " + str(results[1]))
+            before, after = maxEnt(features)
+            print("Feature: " + feature, before, after)
+            f.write(feature + " " + str(before) + " " + str(after) + "\n")
 
 
 
@@ -116,9 +119,10 @@ def compareEachFeature():
 
 def main():
     if len(sys.argv) == 1:
-        # allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss"]
-        # maxEnt(allFeatures)
-        compareEachFeature()
+        allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss"]
+        before, after = maxEnt(allFeatures)
+        print(before, after)
+        # compareEachFeature()
     else:
         maxEnt(sysv.args[1:])
 
