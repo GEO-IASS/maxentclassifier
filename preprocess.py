@@ -39,19 +39,6 @@ def getStrings(filename):
     return lines
 
 
-# Vector ranges are as follows:
-# 0-9: Age Ranges
-# 10-17: WorkClasses
-# 18-33: Education
-# 34-51: Years of Education
-# 52-58: Marital Status
-# 59-73: Job Title
-# 74-83: Hours-per-week (removed)
-# 84-85: Sex (removed)
-# 74-75: Capital Gain < or > 5000
-# 76-77: Capital Loss < or > 1750
-
-
 
 # Input: a list of the features we will be adding to the feature vector
 
