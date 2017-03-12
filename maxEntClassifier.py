@@ -89,6 +89,7 @@ def update(instances, weights0, weights1, V, F, N, emp0, emp1):
     return weights0, weights1
 
 
+#Creates and tests a maximum entropy model, given a list of desired features
 def maxEnt(features):
     print(features)
     instances, labels = load_data("processData.txt", features)
@@ -101,6 +102,10 @@ def maxEnt(features):
     testingData, testingLabels = load_data("testData.txt", features)
 
     beforeTesting = testTraining(testingData, testingLabels, weights0, weights1)
+
+    #Runs 20 iterations of updating weights. We chose 20 iterations because we
+    #observed that for any choice of features, the weights would always converge
+    #essentially completely after 20 iterations
     for j in range(20):
         weights0, weights1 = update(instances, weights0, weights1, V, F, N, emp0, emp1)
 
@@ -110,6 +115,8 @@ def maxEnt(features):
     return beforeTesting, afterTesting
 
 
+#Runs maxent on all possible combinations of N features, and writes results to
+#the desired output file
 def compareN(output, N):
     allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
                    "capital-loss", "sex", "hours-per-week", "race", "native-country"]
@@ -120,6 +127,8 @@ def compareN(output, N):
         for combo in combos:
             before, after = maxEnt(combo)
             f.write(str(combo) + "," + str(after) + "\n")
+
+#Runs maxEnt with the desired features
 def main():
     if len(sys.argv) == 1:
         allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss", "race", "native-country"]
