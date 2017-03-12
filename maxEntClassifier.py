@@ -94,7 +94,6 @@ def maxEnt(features):
         # print(weights1)
         # print()
     # print(weights0, weights1)
-
     afterTesting = testTraining(testingData, testingLabels, weights0, weights1)
 
     return beforeTesting, afterTesting
@@ -186,12 +185,12 @@ def main():
         # print("Training After: ", otherafter, "\n")
         # print("Significant Features: ", sigbefore, sigafter)
         # print("All Features: ", allbefore, allafter)
-        # compareEachFeature()
+        compareEachFeature()
         # comparePairs()
         # compareTriples()
-        compareSevens()
-        compareEights()
-        compareNines()
+        #compareSevens()
+        #compareEights()
+        #compareNines()
 
 
     else:

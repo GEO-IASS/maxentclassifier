@@ -114,6 +114,14 @@ def createVector(strings, feature_args):
             hpw_feat = prev_leng + int(data[12].strip()) // 10
             vec[hpw_feat] = 1
 
+        elif "race" == feature:
+            races = ["White", "Asian-Pac-Islander", "Amer-Indian-Eskimo", "Other", "Black"]
+            prev_leng = len(vec)
+            vec = np.append(vec, np.zeros(len(races)))
+            race_feat = prev_leng + races.index(data[8].strip())
+            vec[race_feat] = 1
+
+
     label = int(data[-1].strip().rstrip(".") == ">50K")
     return (vec, label)
 
