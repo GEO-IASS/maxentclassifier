@@ -137,26 +137,63 @@ def compareTriples():
             f.write("Features " + str(combo) + ": " + "Before training: " + str(before)
                         + " " + "After training: " + str(after) + "\n")
 
+def compareSevens():
+    allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
+                   "capital-loss", "sex", "hours-per-week"]
+    combos = itertools.combinations(allFeatures, 7)
+    if os.path.isfile("compareSevens.txt"):
+        os.remove("compareSevens.txt")
+    with open("compareSevens.txt", "a") as f:
+        for combo in combos:
+            before, after = maxEnt(combo)
+            f.write("Features " + str(combo) + ": " + "Before training: " + str(before)
+                        + " " + "After training: " + str(after) + "\n")
+
+def compareEights():
+    allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
+                   "capital-loss", "sex", "hours-per-week"]
+    combos = itertools.combinations(allFeatures, 8)
+    if os.path.isfile("compareEights.txt"):
+        os.remove("compareEights.txt")
+    with open("compareEights.txt", "a") as f:
+        for combo in combos:
+            before, after = maxEnt(combo)
+            f.write("Features " + str(combo) + ": " + "Before training: " + str(before)
+                        + " " + "After training: " + str(after) + "\n")
+
+def compareNines():
+    allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
+                   "capital-loss", "sex", "hours-per-week"]
+    combos = itertools.combinations(allFeatures, 9)
+    if os.path.isfile("compareNines.txt"):
+        os.remove("compareNines.txt")
+    with open("compareNines.txt", "a") as f:
+        for combo in combos:
+            before, after = maxEnt(combo)
+            f.write("Features " + str(combo) + ": " + "Before training: " + str(before)
+                        + " " + "After training: " + str(after) + "\n")
 
 def main():
     if len(sys.argv) == 1:
         allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss"]
         sig_features = ["workclass", "education", "education-num", "capital-gain", "capital-loss", "occupation"]
-        sigbefore, sigafter = maxEnt(sig_features)
+        # sigbefore, sigafter = maxEnt(sig_features)
         # allbefore, allafter = maxEnt(allFeatures)
         #
         # print("Test Before: ", allbefore, "\n")
         # print("Test After: ", allafter, "\n")
         # print("Training Before: ", otherbefore, "\n")
         # print("Training After: ", otherafter, "\n")
-        print("Significant Features: ", sigbefore, sigafter)
+        # print("Significant Features: ", sigbefore, sigafter)
         # print("All Features: ", allbefore, allafter)
+        # compareEachFeature()
         # comparePairs()
         # compareTriples()
+        compareSevens()
+        compareEights()
+        compareNines()
 
 
-
-        # compareEachFeature()
     else:
         print(maxEnt(sys.argv[1:]))
 

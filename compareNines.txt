@@ -1,0 +1,10 @@
+Features ('age', 'workclass', 'education', 'education-num', 'marital-status', 'occupation', 'capital-gain', 'capital-loss', 'sex'): Before training: 0.7543160690571049 After training: 0.8451527224435591
+Features ('age', 'workclass', 'education', 'education-num', 'marital-status', 'occupation', 'capital-gain', 'capital-loss', 'hours-per-week'): Before training: 0.7543160690571049 After training: 0.848207171314741
+Features ('age', 'workclass', 'education', 'education-num', 'marital-status', 'occupation', 'capital-gain', 'sex', 'hours-per-week'): Before training: 0.7543160690571049 After training: 0.8416334661354582
+Features ('age', 'workclass', 'education', 'education-num', 'marital-status', 'occupation', 'capital-loss', 'sex', 'hours-per-week'): Before training: 0.7543160690571049 After training: 0.8330013280212484
+Features ('age', 'workclass', 'education', 'education-num', 'marital-status', 'capital-gain', 'capital-loss', 'sex', 'hours-per-week'): Before training: 0.7543160690571049 After training: 0.8422974767596282
+Features ('age', 'workclass', 'education', 'education-num', 'occupation', 'capital-gain', 'capital-loss', 'sex', 'hours-per-week'): Before training: 0.7543160690571049 After training: 0.8305444887118194
+Features ('age', 'workclass', 'education', 'marital-status', 'occupation', 'capital-gain', 'capital-loss', 'sex', 'hours-per-week'): Before training: 0.7543160690571049 After training: 0.846879150066401
+Features ('age', 'workclass', 'education-num', 'marital-status', 'occupation', 'capital-gain', 'capital-loss', 'sex', 'hours-per-week'): Before training: 0.7543160690571049 After training: 0.846879150066401
+Features ('age', 'education', 'education-num', 'marital-status', 'occupation', 'capital-gain', 'capital-loss', 'sex', 'hours-per-week'): Before training: 0.7543160690571049 After training: 0.8448871181938911
+Features ('workclass', 'education', 'education-num', 'marital-status', 'occupation', 'capital-gain', 'capital-loss', 'sex', 'hours-per-week'): Before training: 0.7543160690571049 After training: 0.8440239043824701
