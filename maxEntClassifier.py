@@ -140,11 +140,11 @@ def main():
         # print("Training After: ", otherafter, "\n")
         # print("Significant Features: ", sigbefore, sigafter)
         # print("All Features: ", allbefore, allafter)
-        comparePairs()
+        # comparePairs()
 
 
 
-        # compareEachFeature()
+        compareEachFeature()
     else:
         print(maxEnt(sys.argv[1:]))
 
