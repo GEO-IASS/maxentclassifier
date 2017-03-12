@@ -31,8 +31,8 @@ def getStrings(filename):
 
 # Input: a list of the features we will be adding to the feature vector
 
-def createVector(strings, feature_args):
-    data = strings.split(", ")
+def createVector(instance, feature_args):
+    data = instance.split(", ")
     vec = np.zeros(1)
 
     # To dynamically generate the feature vectors, we use a set of elif statements to parse the arguments.
@@ -206,7 +206,13 @@ def main():
     sort_cap_loss = sorted(cap_loss)
     print("Median Value of cap_gain: ", sort_cap_loss[len(cap_loss)//2])
 
-    print(len(return_Feature_Space(strs, 4)))
+    countries = return_all_Features(strs, 13)
+    count = 0
+    for i in range(len(countries)):
+        if countries[i] == "United-States":
+            count+=1
+
+    print("percentage of US citizens in data: ", 100*(count/len(countries)))
 
 
 
