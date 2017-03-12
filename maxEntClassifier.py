@@ -127,7 +127,7 @@ def compareN(output, N):
     with open(output, "a") as f:
         for combo in combos:
             before, after = maxEnt(combo)
-            f.write(str(combo) + "," + str(after) + "\n")
+            f.write(str(combo).replace(",", " ") + "," + str(after) + "\n")
 
 
 # Runs maxEnt with the desired features
@@ -136,9 +136,8 @@ def main():
         allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss", "race", "native-country"]
         sig_features = ["workclass", "education", "education-num", "capital-gain", "capital-loss", "occupation"]
 
-
-        #for i in range(1, len(allFeatures) +1 ):
-            #compareN("compare" + str(i) + ".csv", i)
+        for i in range(1, len(allFeatures) +1):
+            compareN("compare" + str(i) + ".csv", i)
         before, after = maxEnt(allFeatures)
         print(before,after)
 
