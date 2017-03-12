@@ -125,7 +125,6 @@ def createVector(strings, feature_args):
         vec[hpw_feat] = 1
 
     label = int(data[-1].strip().rstrip(".") == ">50K")
-
     return (vec, label)
 
 

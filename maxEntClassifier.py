@@ -113,6 +113,19 @@ def compareEachFeature():
             print("Feature: " + feature, before, after)
             f.write(feature + " " + str(before) + " " + str(after) + "\n")
 
+def comparePairs():
+    allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
+                   "capital-loss", "sex", "hours-per-week"]
+    if os.path.isfile("comparePairs.txt"):
+        os.remove("comparePairs.txt")
+    with open("comparePairs.txt", "a") as f:
+        for i in range(0, len(allFeatures)):
+            for j in range(1, len(allFeatures)):
+                if i == j:
+                    continue
+                before, after = maxEnt([allFeatures[i], allFeatures[j]])
+                f.write("Features " + allFeatures[i] + " & " + allFeatures[j] + ": " + "Before training: " + str(before)
+                        + " " + "After training: " + str(after) + "\n")
 
 
 
@@ -121,8 +134,14 @@ def compareEachFeature():
 def main():
     if len(sys.argv) == 1:
         allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss"]
-        before, after = maxEnt(allFeatures)
-        print(before, after)
+        sig_features = ["workclass", "education", "education-num", "capital-gain", "capital-loss"]
+        # sigbefore, sigafter = maxEnt(sig_features)
+        # allbefore, allafter = maxEnt(allFeatures)
+        # print("Significant Features: ", sigbefore, sigafter)
+        # print("All Features: ", allbefore, allafter)
+        comparePairs()
+
+
         # compareEachFeature()
     else:
         print(maxEnt(sys.argv[1:]))
