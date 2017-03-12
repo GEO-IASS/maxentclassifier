@@ -46,7 +46,10 @@ def createVector(strings, feature_args):
     data = strings.split(", ")
     vec = np.zeros(1)
 # To dynamically generate the feature vectors, we use a set of elif statements to parse the arguments.
+
     for feature in feature_args:
+
+        ##Splits age into 10 different sections. Age ranged from 0-99
         if "age" == feature:
             vec = np.append(vec, np.zeros(10))
             ageFeat = int(data[0].strip()) // 10
@@ -66,10 +69,11 @@ def createVector(strings, feature_args):
             edFeat = prev_leng + education.index(data[3].strip())
             vec[edFeat] = 1
 
+        #Education-num ranged from 1-16
         elif "education-num" == feature:
             prev_leng = len(vec)
-            vec = np.append(vec, np.zeros(34))
-            ednumFeat = prev_leng + int(data[4].strip())
+            vec = np.append(vec, np.zeros(16))
+            ednumFeat = prev_leng + int(data[4].strip()) -1
             vec[ednumFeat] = 1
 
         elif "marital-status" == feature:
@@ -132,6 +136,7 @@ def createVector(strings, feature_args):
             race_feat = prev_leng + races.index(data[8].strip())
             vec[race_feat] = 1
 
+        #Feature encodes whether someone's native country is or is not the US
         elif "native-country" == feature:
             prev_leng = len(vec)
             vec = np.append(vec, np.zeros(2))
