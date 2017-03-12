@@ -132,8 +132,16 @@ def return_Feature_Space(strings, index):
     for line in strings:
         features = line.split(",")
         feature = features[index].strip()
-        if feature not in values:
+        if feature not in values and feature != "0":
             values.append(feature)
+    return values
+
+def return_all_Features(strings, index):
+    values = []
+    for line in strings:
+        features = line.split(",")
+        feature = features[index].strip()
+        values.append(feature)
     return values
 
 
@@ -159,6 +167,23 @@ def main():
     # process_out_null_values("testing.txt", "testData.txt")
     # process_out_null_values("adult.data.txt", "processData.txt")
     strs = getStrings("processData.txt")
+
+    cap_gain = return_Feature_Space(strs, 10)
+
+    for i in range(len(cap_gain)):
+        cap_gain[i] = int(cap_gain[i])
+    print("Average cap_gain = ", sum((cap_gain))/len(cap_gain))
+    sort_cap_gain = sorted(cap_gain)
+    print("Median Value of cap_gain: ", sort_cap_gain[len(cap_gain)//2])
+
+    cap_loss = return_Feature_Space(strs, 11)
+    for i in range(len(cap_loss)):
+        cap_loss[i] = int(cap_loss[i])
+    print("Average cap_loss = ", sum(cap_loss)/len(cap_loss))
+    sort_cap_loss = sorted(cap_loss)
+    print("Median Value of cap_gain: ", sort_cap_loss[len(cap_loss)//2])
+
+    print(len(return_Feature_Space(strs, 4)))
 
 
 
