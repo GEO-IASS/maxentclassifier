@@ -44,7 +44,7 @@ def testTraining(instances, labels, weights0, weights1):
     for i in range(N):
         prob1 = getProbs(instances[i], weights0, weights1)[1]
         guess = int(prob1 > .5)
-        correct += (guess == labels[i])
+        correct += int(guess == labels[i])
     return correct/N
 
 
@@ -72,10 +72,8 @@ def maxEnt(features):
         #weights0[0] = 0
         #weights1[0] = 0
 
-<<<<<<< HEAD
-=======
+
     print("MaxEnt Features: ", features)
->>>>>>> 366e4093406bb7b750378228ec110dcf7915c52d
     instances, labels = load_data("processData.txt", features)
     V = sum(instances[0])
     F = len(instances[0])
@@ -123,7 +121,7 @@ def main():
         # maxEnt(allFeatures)
         compareEachFeature()
     else:
-        maxEnt(sysv.args[1:])
+        print(maxEnt(sys.argv[1:]))
 
 if __name__ == "__main__":
     main()
