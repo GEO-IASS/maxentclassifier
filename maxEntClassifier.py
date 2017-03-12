@@ -17,22 +17,30 @@ def load_data(filename, features):
      return preprocess.processData(filename,features)
 
 
+#Creates empiricals given the set of feature vectors, and the true labels
 def getEmpiricals(instances, labels):
 
     F = len(instances[0])
     N = len(instances)
-    print(F,N)
+    #print(F,N)
+    #Empirical1[i] will store the probability that some instance will have true
+    #label 0, and will have a 1 for feature i
+    empirical0 = np.zeros(F)
     empirical1 = np.zeros(F)
-    empirical2 = np.zeros(F)
     for i in range(N):
+        #If the true label is 0, adds features from instance to empirical0
         if labels[i] == 0:
-            empirical1 = np.add(empirical1, instances[i])
+            empirical1 = np.add(empirical0, instances[i])
         else:
-            empirical2 = np.add(empirical2, instances[i])
+            empirical2 = np.add(empirical1, instances[i])
+
+    #Normalizes empiricals
+    empirical0 /= N
     empirical1 /= N
-    empirical2 /= N
     return (empirical1, empirical2)
 
+#Given a feature vector, and current weight vectors, returns probability
+#that instance is from class 0 or class 1
 def getProbs(instance, w0, w1):
 
     prob0 = np.exp(np.dot(instance, w0))
@@ -40,6 +48,8 @@ def getProbs(instance, w0, w1):
     const = prob0 + prob1
     return(prob0/ const, prob1/const)
 
+#Classifies feature vectors from instances, and returns the proportion of
+#guesses that are correct
 def testTraining(instances, labels, weights0, weights1):
     correct = 0
     N = len(instances)
@@ -49,8 +59,11 @@ def testTraining(instances, labels, weights0, weights1):
         correct += int(guess == labels[i])
     return correct/N
 
-
+#Performs a full iteration of maxent, and updates the weights
 def update(instances, weights0, weights1, V, F, N, emp0, emp1):
+
+    #Model0, model1 are the feature distributions as per our model given the
+    #current weights
     model0 = np.zeros(F)
     model1 = np.zeros(F)
     for instance in instances:
@@ -60,6 +73,10 @@ def update(instances, weights0, weights1, V, F, N, emp0, emp1):
     model0 /= N
     model1 /= N
     for i in range(F):
+
+        #If the model prediction is 0 for some feature, sets
+        #corresponding weight to 0. In some cases, this may be due
+        #to python rounding down very small numbers to 0
         try:
             weights0[i] = weights0[i] * (emp0[i] / model0[i])**(1/V)
         except:
