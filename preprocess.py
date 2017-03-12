@@ -1,3 +1,9 @@
+import numpy as np
+
+
+#Removes all instances that have missing values, and stores remaining
+#instances in new .txt file. Was only used once on training data,
+#and once on testing data
 def process_out_null_values(filename_original, filename_output):
     with open(filename_original) as f:
 
@@ -6,16 +12,11 @@ def process_out_null_values(filename_original, filename_output):
             for line in f:
                 count +=1
 
-                # if " ?" in line.split(","):
-                #    print(line)
                 line_list = line.split(",")
                 if not " ?" in line_list:
                     w.write(line)
 
-                    # else:
-
-                    #    print(line.split(","))
-            print(count)
+            #print(count)
 
 '''
 We are splitting data up as follows:
@@ -25,7 +26,8 @@ We are splitting data up as follows:
 3) We are making all of the features class dependent on class 1 (less than $50000)
 4) We will have all 0's and then a slack value for the feature vector for class 2 (greater than $50000)
 '''
-import numpy as np
+
+#returns a list of strings corresponding to lines of the data file
 def getStrings(filename):
     lines = []
     with open(filename) as f:
@@ -35,19 +37,6 @@ def getStrings(filename):
                 lines.append(line)
     #print(lines)
     return lines
-
-
-# Vector ranges are as follows:
-# 0-9: Age Ranges
-# 10-17: WorkClasses
-# 18-33: Education
-# 34-51: Years of Education
-# 52-58: Marital Status
-# 59-73: Job Title
-# 74-83: Hours-per-week (removed)
-# 84-85: Sex (removed)
-# 74-75: Capital Gain < or > 5000
-# 76-77: Capital Loss < or > 1750
 
 
 
@@ -129,6 +118,7 @@ def createVector(strings, feature_args):
     return (vec, label)
 
 
+# Given a particular feature index, returns a list of all possible values for that feature in the training data.
 def return_Feature_Space(strings, index):
     values = []
     for line in strings:
@@ -139,7 +129,8 @@ def return_Feature_Space(strings, index):
     return values
 
 
-
+#Takes a list of strings corresponding to lines from the data file
+#returns a list of feature vectors, and a list of correct labels
 def create_Feature_Vectors(inputStrings, features):
     vectorList = []
     labelList = []
@@ -150,6 +141,8 @@ def create_Feature_Vectors(inputStrings, features):
         labelList.append(label)
     return (vectorList, labelList)
 
+#Given filename and desired features, returns a list of feature vectors
+#and correct labels
 def processData(filename, features):
     strs = getStrings(filename)
     return create_Feature_Vectors(strs, features)
@@ -162,12 +155,6 @@ def main():
 
 
 
-
-    #Testing that our data outputs as expected...
-    # result = create_Feature_Vectors(strs)
-    # with open("output.txt", "a") as f:
-    #     for item in result:
-    #         f.write(str(item))
 
 if __name__ == "__main__":
     main()
