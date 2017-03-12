@@ -1,9 +1,9 @@
 import numpy as np
 
 
-#Removes all instances that have missing values, and stores remaining
-#instances in new .txt file. Was only used once on training data,
-#and once on testing data
+# Removes all instances that have missing values, and stores remaining
+# instances in new .txt file. Was only used once on training data,
+# and once on testing data
 def process_out_null_values(filename_original, filename_output):
     with open(filename_original) as f:
 
@@ -16,18 +16,9 @@ def process_out_null_values(filename_original, filename_output):
                 if not " ?" in line_list:
                     w.write(line)
 
-            #print(count)
 
-'''
-We are splitting data up as follows:
+# Returns a list of strings corresponding to lines of the data file
 
-1) For categories like occupation, we will have a feature that is 0/1 for each possible occupation.
-2) For categories like age, capital-gain/loss, and hours, we will have a feature that is 0/1 for some range
-3) We are making all of the features class dependent on class 1 (less than $50000)
-4) We will have all 0's and then a slack value for the feature vector for class 2 (greater than $50000)
-'''
-
-#returns a list of strings corresponding to lines of the data file
 def getStrings(filename):
     lines = []
     with open(filename) as f:
@@ -35,9 +26,7 @@ def getStrings(filename):
         for line in f:
             if line != '\n':
                 lines.append(line)
-    #print(lines)
     return lines
-
 
 
 # Input: a list of the features we will be adding to the feature vector
@@ -45,11 +34,13 @@ def getStrings(filename):
 def createVector(strings, feature_args):
     data = strings.split(", ")
     vec = np.zeros(1)
-# To dynamically generate the feature vectors, we use a set of elif statements to parse the arguments.
+
+    # To dynamically generate the feature vectors, we use a set of elif statements to parse the arguments.
 
     for feature in feature_args:
 
-        ##Splits age into 10 different sections. Age ranged from 0-99
+        # Splits age into 10 different sections. Age ranged from 0-99
+
         if "age" == feature:
             vec = np.append(vec, np.zeros(10))
             ageFeat = int(data[0].strip()) // 10
@@ -69,7 +60,8 @@ def createVector(strings, feature_args):
             edFeat = prev_leng + education.index(data[3].strip())
             vec[edFeat] = 1
 
-        #Education-num ranged from 1-16
+        # Education-num ranged from 1-16
+
         elif "education-num" == feature:
             prev_leng = len(vec)
             vec = np.append(vec, np.zeros(16))
@@ -93,24 +85,22 @@ def createVector(strings, feature_args):
             occupation_feat = prev_leng + occupations.index(data[6].strip())
             vec[occupation_feat] = 1
 
-
         elif "capital-gain" == feature:
             prev_leng = len(vec)
             vec = np.append(vec, np.zeros(2))
-            #Feature is 1 or 0 depending on whether greater than 3674.
-            #This is median value among nonzero capital gains.
-            #Overall median of capital gains was just 0
+            # Feature is 1 or 0 depending on whether greater than 3674.
+            # This is median value among nonzero capital gains.
+            # Overall median of capital gains was just 0
             cap_gain_feat = prev_leng + int(int(data[10].strip()) > 3674)
 
             vec[cap_gain_feat] = 1
 
-        #
         elif "capital-loss" == feature:
             prev_leng = len(vec)
             vec = np.append(vec, np.zeros(2))
-            #Feature is 1 or 0 depending on whether greater than 1876.
-            #This is median value among nonzero capital loss.
-            #Overall median of capital losses was just 0
+            # Feature is 1 or 0 depending on whether greater than 1876.
+            # This is median value among nonzero capital loss.
+            # Overall median of capital losses was just 0
             cap_loss_feat = prev_leng + int(int(data[11].strip()) > 1876)
             vec[cap_loss_feat] = 1
 
@@ -121,8 +111,9 @@ def createVector(strings, feature_args):
             sex_feat = prev_leng + sexes.index(data[9].strip())
             vec[sex_feat] = 1
 
-        #Splits range of hours-per-week into 10 sections. Hours-per-week in
-        #data set ranges from 0-99
+        # Splits range of hours-per-week into 10 sections. Hours-per-week in
+        # data set ranges from 0-99
+
         elif "hours-per-week" == feature:
             prev_leng = len(vec)
             vec = np.append(vec, np.zeros(10))
@@ -136,20 +127,22 @@ def createVector(strings, feature_args):
             race_feat = prev_leng + races.index(data[8].strip())
             vec[race_feat] = 1
 
-        #Feature encodes whether someone's native country is or is not the US
+        # Feature encodes whether someone's native country is or is not the US
+
         elif "native-country" == feature:
             prev_leng = len(vec)
             vec = np.append(vec, np.zeros(2))
             nc_feat = int(data[11].strip() == "United-States")
-            nc_feat = prev_leng + nc_feat
+            nc_feat += prev_leng
             vec[nc_feat] = 1
 
-
     label = int(data[-1].strip().rstrip(".") == ">50K")
-    return (vec, label)
+
+    return vec, label
 
 
-# Given a particular feature index, returns a list of all possible values for that feature in the training data.
+# Given a particular feature index, returns a list of all UNIQUE values for that feature in the training data.
+
 def return_Feature_Space(strings, index):
     values = []
     for line in strings:
@@ -158,6 +151,9 @@ def return_Feature_Space(strings, index):
         if feature not in values and feature != "0":
             values.append(feature)
     return values
+
+
+# Given a particular feature index, returns a list of ALL values for that feature in the training data.
 
 def return_all_Features(strings, index):
     values = []
@@ -168,8 +164,9 @@ def return_all_Features(strings, index):
     return values
 
 
-#Takes a list of strings corresponding to lines from the data file
-#returns a list of feature vectors, and a list of correct labels
+# Takes a list of strings corresponding to lines from the data file
+# returns a list of feature vectors, and a list of correct labels
+
 def create_Feature_Vectors(inputStrings, features):
     vectorList = []
     labelList = []
@@ -180,11 +177,14 @@ def create_Feature_Vectors(inputStrings, features):
         labelList.append(label)
     return (vectorList, labelList)
 
-#Given filename and desired features, returns a list of feature vectors
-#and correct labels
+# Given filename and desired features, returns a list of feature vectors
+# and correct labels
+
+
 def processData(filename, features):
     strs = getStrings(filename)
     return create_Feature_Vectors(strs, features)
+
 
 def main():
     # process_out_null_values("testing.txt", "testData.txt")
