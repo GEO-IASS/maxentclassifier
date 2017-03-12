@@ -95,7 +95,7 @@ def maxEnt(features):
 
 def compareN(output, N):
     allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
-                   "capital-loss", "sex", "hours-per-week"]
+                   "capital-loss", "sex", "hours-per-week", "race", "native-country"]
     combos = itertools.combinations(allFeatures, N)
     if os.path.isfile(output):
         os.remove(output)
@@ -105,13 +105,14 @@ def compareN(output, N):
             f.write(str(combo) + "," + str(after) + "\n")
 def main():
     if len(sys.argv) == 1:
-        allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss"]
+        allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss", "race", "native-country"]
         sig_features = ["workclass", "education", "education-num", "capital-gain", "capital-loss", "occupation"]
 
 
-        for i in range(1, 10):
-            compareN("compare" + str(i) + ".txt", i)
-
+        #for i in range(1, 10):
+            #compareN("compare" + str(i) + ".txt", i)
+        before, after = maxEnt(allFeatures)
+        print(before,after)
 
     else:
         print(maxEnt(sys.argv[1:]))
