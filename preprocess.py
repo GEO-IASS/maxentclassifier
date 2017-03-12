@@ -121,6 +121,13 @@ def createVector(strings, feature_args):
             race_feat = prev_leng + races.index(data[8].strip())
             vec[race_feat] = 1
 
+        elif "native-country" == feature:
+            prev_leng = len(vec)
+            vec = np.append(vec, np.zeros(2))
+            nc_feat = int(data[11].strip() == "United-States")
+            nc_feat = prev_leng + nc_feat
+            vec[nc_feat] = 1
+
 
     label = int(data[-1].strip().rstrip(".") == ">50K")
     return (vec, label)
