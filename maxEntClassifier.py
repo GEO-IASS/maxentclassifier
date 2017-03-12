@@ -8,6 +8,7 @@ import preprocess
 import warnings
 import sys
 import os
+import itertools
 warnings.filterwarnings('error')
 
 
@@ -124,7 +125,17 @@ def comparePairs():
                         + " " + "After training: " + str(after) + "\n")
 
 
-
+def compareTriples():
+    allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
+                   "capital-loss", "sex", "hours-per-week"]
+    combos = itertools.combinations(allFeatures, 3)
+    if os.path.isfile("compareTriples.txt"):
+        os.remove("compareTriples.txt")
+    with open("compareTriples.txt", "a") as f:
+        for combo in combos:
+            before, after = maxEnt(combo)
+            f.write("Features " + str(combo) + ": " + "Before training: " + str(before)
+                        + " " + "After training: " + str(after) + "\n")
 
 
 def main():
@@ -141,10 +152,11 @@ def main():
         # print("Significant Features: ", sigbefore, sigafter)
         # print("All Features: ", allbefore, allafter)
         # comparePairs()
+        compareTriples()
 
 
 
-        compareEachFeature()
+        # compareEachFeature()
     else:
         print(maxEnt(sys.argv[1:]))
 
