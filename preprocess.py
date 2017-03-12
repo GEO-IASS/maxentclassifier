@@ -108,6 +108,8 @@ def createVector(strings, feature_args):
             sex_feat = prev_leng + sexes.index(data[9].strip())
             vec[sex_feat] = 1
 
+        #Splits range of hours-per-week into 10 sections. Hours-per-week in
+        #data set ranges from 0-99
         elif "hours-per-week" == feature:
             prev_leng = len(vec)
             vec = np.append(vec, np.zeros(10))

@@ -109,9 +109,10 @@ def main():
         sig_features = ["workclass", "education", "education-num", "capital-gain", "capital-loss", "occupation"]
 
 
-        for i in range(1, 10):
-            compareN("compare" + str(i) + ".txt", i)
-
+        #for i in range(1, 10):
+            #compareN("compare" + str(i) + ".txt", i)
+        before, after = maxEnt(allFeatures)
+        print(before,after)
 
     else:
         print(maxEnt(sys.argv[1:]))
