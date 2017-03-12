@@ -84,24 +84,19 @@ def maxEnt(features):
     testingData, testingLabels = load_data("testData.txt", features)
     #print(testingLabels)
 
-    print("Weights0: ", weights0, "\n")
-    print("Weights1: ", weights1, "\n")
-
     beforeTesting = testTraining(testingData, testingLabels, weights0, weights1)
-    otherbeforeTesting = testTraining(instances, labels, weights0, weights1)
-    for j in range(50):
+    for j in range(20):
         weights0, weights1 = update(instances, weights0, weights1, V, F, N, emp0, emp1)
         # print(testTraining(instances, labels, weights0, weights1))
         # print(weights0)
         # print()
         # print(weights1)
         # print()
-    print(weights0, weights1)
+    # print(weights0, weights1)
 
     afterTesting = testTraining(testingData, testingLabels, weights0, weights1)
-    otherafterTesting = testTraining(instances, labels, weights0, weights1)
 
-    return beforeTesting, afterTesting, otherbeforeTesting, otherafterTesting
+    return beforeTesting, afterTesting
 
 def compareEachFeature():
     allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
@@ -123,9 +118,7 @@ def comparePairs():
         os.remove("comparePairs.txt")
     with open("comparePairs.txt", "a") as f:
         for i in range(0, len(allFeatures)):
-            for j in range(1, len(allFeatures)):
-                if i == j:
-                    continue
+            for j in range(i+1, len(allFeatures)):
                 before, after = maxEnt([allFeatures[i], allFeatures[j]])
                 f.write("Features " + allFeatures[i] + " & " + allFeatures[j] + ": " + "Before training: " + str(before)
                         + " " + "After training: " + str(after) + "\n")
@@ -139,15 +132,15 @@ def main():
         allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss"]
         sig_features = ["workclass", "education", "education-num", "capital-gain", "capital-loss"]
         # sigbefore, sigafter = maxEnt(sig_features)
-        allbefore, allafter, otherbefore, otherafter = maxEnt(allFeatures)
-
-        print("Test Before: ", allbefore, "\n")
-        print("Test After: ", allafter, "\n")
-        print("Training Before: ", otherbefore, "\n")
-        print("Training After: ", otherafter, "\n")
+        # allbefore, allafter, otherbefore, otherafter = maxEnt(allFeatures)
+        #
+        # print("Test Before: ", allbefore, "\n")
+        # print("Test After: ", allafter, "\n")
+        # print("Training Before: ", otherbefore, "\n")
+        # print("Training After: ", otherafter, "\n")
         # print("Significant Features: ", sigbefore, sigafter)
         # print("All Features: ", allbefore, allafter)
-       # comparePairs()
+        comparePairs()
 
 
 
