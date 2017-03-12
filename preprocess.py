@@ -57,72 +57,73 @@ def createVector(strings, feature_args):
     data = strings.split(", ")
     vec = np.zeros(1)
 # To dynamically generate the feature vectors, we use a set of elif statements to parse the arguments.
-    if "age" in feature_args:
-        vec = np.append(vec, np.zeros(10))
-        ageFeat = int(data[0].strip()) // 10
-        vec[ageFeat] = 1
+    for feature in feature_args:
+        if "age" == feature:
+            vec = np.append(vec, np.zeros(10))
+            ageFeat = int(data[0].strip()) // 10
+            vec[ageFeat] = 1
 
-    elif "workclass" in feature_args:
-        workclasses = ["Private", "Self-emp-not-inc", "Self-emp-inc", "Federal-gov", "Local-gov", "State-gov", "Without-pay", "Never-worked"]
-        prev_leng = len(vec)
-        vec = np.append(vec, np.zeros(len(workclasses)))
-        classFeat = prev_leng + workclasses.index(data[1].strip())
-        vec[classFeat] = 1
+        elif "workclass" == feature:
+            workclasses = ["Private", "Self-emp-not-inc", "Self-emp-inc", "Federal-gov", "Local-gov", "State-gov", "Without-pay", "Never-worked"]
+            prev_leng = len(vec)
+            vec = np.append(vec, np.zeros(len(workclasses)))
+            classFeat = prev_leng + workclasses.index(data[1].strip())
+            vec[classFeat] = 1
 
-    elif "education" in feature_args:
-        education = ["Bachelors", "Some-college", "11th", "HS-grad", "Prof-school", "Assoc-acdm", "Assoc-voc", "9th", "7th-8th", "12th", "Masters", "1st-4th", "10th", "Doctorate", "5th-6th", "Preschool"]
-        prev_leng = len(vec)
-        vec = np.append(vec, np.zeros(len(education)))
-        edFeat = prev_leng + education.index(data[3].strip())
-        vec[edFeat] = 1
+        elif "education" == feature:
+            education = ["Bachelors", "Some-college", "11th", "HS-grad", "Prof-school", "Assoc-acdm", "Assoc-voc", "9th", "7th-8th", "12th", "Masters", "1st-4th", "10th", "Doctorate", "5th-6th", "Preschool"]
+            prev_leng = len(vec)
+            vec = np.append(vec, np.zeros(len(education)))
+            edFeat = prev_leng + education.index(data[3].strip())
+            vec[edFeat] = 1
 
-    elif "education-num" in feature_args:
-        prev_leng = len(vec)
-        vec = np.append(vec, np.zeros(34))
-        ednumFeat = prev_leng + int(data[4].strip())
-        vec[ednumFeat] = 1
+        elif "education-num" == feature:
+            prev_leng = len(vec)
+            vec = np.append(vec, np.zeros(34))
+            ednumFeat = prev_leng + int(data[4].strip())
+            vec[ednumFeat] = 1
 
-    elif "marital-status" in feature_args:
-        marital_statuses = ['Never-married', 'Married-civ-spouse', 'Divorced', 'Married-spouse-absent', 'Separated',
-                    'Married-AF-spouse', 'Widowed']
-        prev_leng = len(vec)
-        vec = np.append(vec, np.zeros(len(marital_statuses)))
-        marital_feat = prev_leng + marital_statuses.index(data[5].strip())
-        vec[marital_feat] = 1
+        elif "marital-status" == feature:
+            marital_statuses = ['Never-married', 'Married-civ-spouse', 'Divorced', 'Married-spouse-absent', 'Separated',
+                        'Married-AF-spouse', 'Widowed']
+            prev_leng = len(vec)
+            vec = np.append(vec, np.zeros(len(marital_statuses)))
+            marital_feat = prev_leng + marital_statuses.index(data[5].strip())
+            vec[marital_feat] = 1
 
-    elif "occupation" in feature_args:
-        occupations = ['Adm-clerical', 'Exec-managerial', 'Handlers-cleaners', 'Prof-specialty', 'Other-service', 'Sales',
-              'Transport-moving', 'Farming-fishing', 'Machine-op-inspct', 'Tech-support', 'Craft-repair',
-              'Protective-serv', 'Armed-Forces', 'Priv-house-serv']
-        prev_leng = len(vec)
-        vec = np.append(vec, np.zeros(len(occupations)))
-        occupation_feat = prev_leng + occupations.index(data[6].strip())
-        vec[occupation_feat] = 1
+        elif "occupation" == feature:
+            occupations = ['Adm-clerical', 'Exec-managerial', 'Handlers-cleaners', 'Prof-specialty', 'Other-service', 'Sales',
+                  'Transport-moving', 'Farming-fishing', 'Machine-op-inspct', 'Tech-support', 'Craft-repair',
+                  'Protective-serv', 'Armed-Forces', 'Priv-house-serv']
+            prev_leng = len(vec)
+            vec = np.append(vec, np.zeros(len(occupations)))
+            occupation_feat = prev_leng + occupations.index(data[6].strip())
+            vec[occupation_feat] = 1
 
-    elif "capital-gain" in feature_args:
-        prev_leng = len(vec)
-        vec = np.append(vec, np.zeros(2))
-        cap_gain_feat = prev_leng + int(int(data[10].strip()) > 5000)
-        vec[cap_gain_feat] = 1
+        elif "capital-gain" == feature:
+            prev_leng = len(vec)
+            vec = np.append(vec, np.zeros(2))
+            cap_gain_feat = prev_leng + int(int(data[10].strip()) > 5000)
+            vec[cap_gain_feat] = 1
 
-    elif "capital-loss" in feature_args:
-        prev_leng = len(vec)
-        vec = np.append(vec, np.zeros(2))
-        cap_loss_feat = prev_leng + int(int(data[11].strip()) > 1750)
-        vec[cap_loss_feat] = 1
+        elif "capital-loss" == feature:
+            prev_leng = len(vec)
+            vec = np.append(vec, np.zeros(2))
+            cap_loss_feat = prev_leng + int(int(data[11].strip()) > 1750)
+            vec[cap_loss_feat] = 1
 
-    elif "sex" in feature_args:
-        sexes = ["Female", "Male"]
-        prev_leng = len(vec)
-        vec = np.append(vec, np.zeros(2))
-        sex_feat = prev_leng + sexes.index(data[9].strip())
-        vec[sex_feat] = 1
+        elif "sex" == feature:
+            sexes = ["Female", "Male"]
+            prev_leng = len(vec)
+            vec = np.append(vec, np.zeros(2))
+            sex_feat = prev_leng + sexes.index(data[9].strip())
+            vec[sex_feat] = 1
 
-    elif "hours-per-week" in feature_args:
-        prev_leng = len(vec)
-        vec = np.append(vec, np.zeros(10))
-        hpw_feat = prev_leng + int(data[12].strip()) // 10
-        vec[hpw_feat] = 1
+        elif "hours-per-week" == feature:
+            prev_leng = len(vec)
+            vec = np.append(vec, np.zeros(10))
+            hpw_feat = prev_leng + int(data[12].strip()) // 10
+            vec[hpw_feat] = 1
 
     label = int(data[-1].strip().rstrip(".") == ">50K")
     return (vec, label)

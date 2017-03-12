@@ -141,18 +141,18 @@ def compareTriples():
 def main():
     if len(sys.argv) == 1:
         allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss"]
-        sig_features = ["workclass", "education", "education-num", "capital-gain", "capital-loss"]
-        # sigbefore, sigafter = maxEnt(sig_features)
-        # allbefore, allafter, otherbefore, otherafter = maxEnt(allFeatures)
+        sig_features = ["workclass", "education", "education-num", "capital-gain", "capital-loss", "occupation"]
+        sigbefore, sigafter = maxEnt(sig_features)
+        # allbefore, allafter = maxEnt(allFeatures)
         #
         # print("Test Before: ", allbefore, "\n")
         # print("Test After: ", allafter, "\n")
         # print("Training Before: ", otherbefore, "\n")
         # print("Training After: ", otherafter, "\n")
-        # print("Significant Features: ", sigbefore, sigafter)
+        print("Significant Features: ", sigbefore, sigafter)
         # print("All Features: ", allbefore, allafter)
         # comparePairs()
-        compareTriples()
+        # compareTriples()
 
 
 
