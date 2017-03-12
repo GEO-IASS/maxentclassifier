@@ -118,7 +118,7 @@ def createVector(strings, feature_args):
     return (vec, label)
 
 
-
+# Given a particular feature index, returns a list of all possible values for that feature in the training data.
 def return_Feature_Space(strings, index):
     values = []
     for line in strings:
