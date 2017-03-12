@@ -6,6 +6,7 @@
 import numpy as np
 import preprocess
 import warnings
+import sys
 warnings.filterwarnings('error')
 
 
@@ -71,7 +72,7 @@ def maxEnt(features):
         #weights0[0] = 0
         #weights1[0] = 0
 
-    instances, labels = load_data("processData.txt")
+    instances, labels = load_data("processData.txt", features)
     V = sum(instances[0])
     F = len(instances[0])
     N = len(instances)
