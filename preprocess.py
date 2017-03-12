@@ -53,49 +53,68 @@ def getStrings(filename):
 
 # Input: a list of the features we will be adding to the feature vector
 
-features = [age, workclass, education, education-num, marital-status, occupation, capital-gain, capital-loss]
-def createVector(str,feature_args):
-    data = str.split(", ")
-    vec = np.empty()
+def createVector(strings, feature_args):
+    data = strings.split(", ")
+    vec = np.zeros(1)
+
+# To dynamically generate the feature vectors, we use a set of elif statements to parse the arguments.
     if "age" in feature_args:
-        np.append(np.zeros(10))
+        vec = np.append(vec, np.zeros(10))
         ageFeat = int(data[0].strip()) // 10
         vec[ageFeat] = 1
-    vec = np.zeros(78)
 
-    workclasses = ["Private", "Self-emp-not-inc", "Self-emp-inc", "Federal-gov", "Local-gov", "State-gov", "Without-pay", "Never-worked"]
-    classFeat = 10 + workclasses.index(data[1].strip())
-    vec[classFeat] = 1
-    education = ["Bachelors", "Some-college", "11th", "HS-grad", "Prof-school", "Assoc-acdm", "Assoc-voc", "9th", "7th-8th", "12th", "Masters", "1st-4th", "10th", "Doctorate", "5th-6th", "Preschool"]
-    edFeat = 18 + education.index(data[3].strip())
-    vec[edFeat] = 1
-    ednumFeat = 34 + int(data[4].strip())
-    vec[ednumFeat] = 1
-    vec[edFeat] = 1
+    elif "workclass" in feature_args:
+        workclasses = ["Private", "Self-emp-not-inc", "Self-emp-inc", "Federal-gov", "Local-gov", "State-gov", "Without-pay", "Never-worked"]
+        vec = np.append(vec, np.zeros(len(workclasses)))
+        classFeat = len(vec) + workclasses.index(data[1].strip())
+        vec[classFeat] = 1
 
-    marital_statuses = ['Never-married', 'Married-civ-spouse', 'Divorced', 'Married-spouse-absent', 'Separated', 'Married-AF-spouse', 'Widowed']
-    marital_feat = 52 + marital_statuses.index(data[5].strip())
-    vec[marital_feat] = 1
+    elif "education" in feature_args:
+        education = ["Bachelors", "Some-college", "11th", "HS-grad", "Prof-school", "Assoc-acdm", "Assoc-voc", "9th", "7th-8th", "12th", "Masters", "1st-4th", "10th", "Doctorate", "5th-6th", "Preschool"]
+        vec = np.append(vec, np.zeros(len(education)))
+        edFeat = len(vec) + education.index(data[3].strip())
+        vec[edFeat] = 1
 
-    job_titles = ['Adm-clerical', 'Exec-managerial', 'Handlers-cleaners', 'Prof-specialty', 'Other-service', 'Sales', 'Transport-moving', 'Farming-fishing', 'Machine-op-inspct', 'Tech-support', 'Craft-repair', 'Protective-serv', 'Armed-Forces', 'Priv-house-serv']
-    job_title_feat = 59 + job_titles.index(data[6].strip())
-    vec[job_title_feat] = 1
+    elif "education-num" in feature_args:
+        vec = np.append(vec, np.zeros(1))
+        ednumFeat = len(vec) + int(data[4].strip())
+        vec[ednumFeat] = 1
 
-    cap_gain_feat = 74 + int(int(data[10].strip()) > 5000)
-    vec[cap_gain_feat] = 1
+    elif "marital-status" in feature_args:
+        marital_statuses = ['Never-married', 'Married-civ-spouse', 'Divorced', 'Married-spouse-absent', 'Separated',
+                    'Married-AF-spouse', 'Widowed']
+        vec = np.append(vec, np.zeros(len(marital_statuses)))
+        marital_feat = len(vec) + marital_statuses.index(data[5].strip())
+        vec[marital_feat] = 1
 
-    cap_loss_feat = 76 + int(int(data[11].strip()) > 1750)
-    vec[cap_loss_feat] = 1
+    elif "occupation" in feature_args:
+        occupations = ['Adm-clerical', 'Exec-managerial', 'Handlers-cleaners', 'Prof-specialty', 'Other-service', 'Sales',
+              'Transport-moving', 'Farming-fishing', 'Machine-op-inspct', 'Tech-support', 'Craft-repair',
+              'Protective-serv', 'Armed-Forces', 'Priv-house-serv']
+        vec = np.append(vec, np.zeros(len(occupations)))
+        occupation_feat = len(vec) + occupations.index(data[6].strip())
+        vec[occupation_feat] = 1
 
+    elif "capital-gain" in feature_args:
+        vec = np.append(vec, np.zeros(1))
+        cap_gain_feat = len(vec) + int(int(data[10].strip()) > 5000)
+        vec[cap_gain_feat] = 1
 
-    # These two features actually reduced classification probability so I removed them.
+    elif "capital-loss" in feature_args:
+        vec = np.append(vec, np.zeros(1))
+        cap_loss_feat = len(vec)+ int(int(data[11].strip()) > 1750)
+        vec[cap_loss_feat] = 1
 
-    # hourspw_feat = 74 + int(data[12].strip()) // 10
-    # vec[hourspw_feat] = 1
-    #
-    # sexes = ["Female", "Male"]
-    # sex_feat = 84 + sexes.index(data[9].strip())
-    # vec[sex_feat] = 1
+    elif "sex" in feature_args:
+        sexes = ["Female", "Male"]
+        vec = np.append(vec, np.zeros(2))
+        sex_feat = len(vec) + sexes.index(data[9].strip())
+        vec[sex_feat] = 1
+
+    elif "hours-per-week" in feature_args:
+        vec = np.append(vec, np.zeros(10))
+        hpw_feat = len(vec) + int(data[12].strip()) // 10
+        vec[hpw_feat] = 1
 
     label = int(data[-1].strip().rstrip(".") == ">50K")
 
@@ -113,13 +132,12 @@ def return_Feature_Space(strings, index):
 
 
 
-
-def create_Feature_Vectors(inputStrings):
+def create_Feature_Vectors(inputStrings, features):
     vectorList = []
     labelList = []
 
     for line in inputStrings:
-        vec, label = createVector(line)
+        vec, label = createVector(line, features)
         vectorList.append(vec)
         labelList.append(label)
     return (vectorList, labelList)
@@ -129,23 +147,11 @@ def processData(filename, features):
     return create_Feature_Vectors(strs, features)
 
 def main():
-    process_out_null_values("testing.txt", "testData.txt")
-    process_out_null_values("adult.data.txt", "processData.txt")
+    # process_out_null_values("testing.txt", "testData.txt")
+    # process_out_null_values("adult.data.txt", "processData.txt")
     strs = getStrings("processData.txt")
-    # result = create_Feature_Vectors(strs)
-    capital_loss = return_Feature_Space(strs, 11)
-    print(sorted(capital_loss))
 
 
-    greater_3500 = 0
-    for i in range(len(capital_loss)):
-        if int(capital_loss[i]) > 1900:
-            greater_3500 += 1
-        capital_loss[i] = int(capital_loss[i])
-    print(greater_3500)
-
-    print("Average: ", sum(capital_loss)/len(capital_loss))
-    print(len(capital_loss))
 
 
 

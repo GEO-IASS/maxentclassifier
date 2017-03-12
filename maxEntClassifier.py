@@ -45,7 +45,7 @@ def testTraining(instances, labels, weights0, weights1):
         prob1 = getProbs(instances[i], weights0, weights1)[1]
         guess = int(prob1 > .5)
         correct += (guess == labels[i])
-    print(correct/N)
+    return correct/N
 
 
 
@@ -72,6 +72,10 @@ def maxEnt(features):
         #weights0[0] = 0
         #weights1[0] = 0
 
+<<<<<<< HEAD
+=======
+    print("MaxEnt Features: ", features)
+>>>>>>> 366e4093406bb7b750378228ec110dcf7915c52d
     instances, labels = load_data("processData.txt", features)
     V = sum(instances[0])
     F = len(instances[0])
@@ -79,14 +83,11 @@ def maxEnt(features):
     emp0, emp1 = getEmpiricals(instances, labels)
     weights0 = np.ones(F)
     weights1 = np.ones(F)
-    testingData, testingLabels = load_data("testData.txt")
+    testingData, testingLabels = load_data("testData.txt", features)
     #print(testingLabels)
 
-    print("Testing on training data:")
-    testTraining(instances, labels, weights0, weights1)
-    print("Testing on test data")
 
-    testTraining(testingData, testingLabels, weights0, weights1)
+    beforeTesting = testTraining(testingData, testingLabels, weights0, weights1)
     for j in range(20):
         update()
         # print(testTraining(instances, labels, weights0, weights1))
@@ -96,16 +97,31 @@ def maxEnt(features):
         # print()
     print(weights0, weights1)
 
-    print("Testing on training data:")
-    testTraining(instances, labels, weights0, weights1)
-    print("Testing on test data")
-    testTraining(testingData, testingLabels, weights0, weights1)
+    afterTesting = testTraining(testingData, testingLabels, weights0, weights1)
+
+    return beforeTesting, afterTesting
+
+def compareEachFeature():
+    allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
+                   "capital-loss", "sex", "hours-per-week"]
+
+    with open("compareIndividualFeatures.txt", "a") as f:
+        for feature in allFeatures:
+            features = [feature]
+            results = maxEnt(features)
+            print("Feature: " + feature, results)
+            f.write(feature + " " + str(results[0]) + " " + str(results[1]))
+
+
+
+
 
 
 def main():
     if len(sys.argv) == 1:
-        allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss"]
-        maxEnt(allFeatures)
+        # allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss"]
+        # maxEnt(allFeatures)
+        compareEachFeature()
     else:
         maxEnt(sysv.args[1:])
 
