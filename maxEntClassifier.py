@@ -28,19 +28,21 @@ def getEmpiricals(instances, labels):
     for i in range(N):
         # If the true label is 0, adds features from instance to empirical0
         if labels[i] == 0:
-            empirical1 = np.add(empirical0, instances[i])
+            empirical0 = np.add(empirical0, instances[i])
         else:
-            empirical2 = np.add(empirical1, instances[i])
+            empirical1 = np.add(empirical1, instances[i])
 
     # Normalizes empiricals
     empirical0 /= N
     empirical1 /= N
-    return (empirical1, empirical2)
+    return (empirical0, empirical1)
 
 
 # Given a feature vector, and current weight vectors, returns probability
 # that instance is from class 0 or class 1
 def getProbs(instance, w0, w1):
+    # print("w0 :", w0, " w1: ", w1)
+    # print("\n")
 
     prob0 = np.exp(np.dot(instance, w0))
     prob1 = np.exp(np.dot(instance, w1))
@@ -120,7 +122,7 @@ def maxEnt(features):
 # the desired output file
 def compareN(output, N):
     allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
-                   "capital-loss", "sex", "hours-per-week", "race", "native-country"]
+                   "capital-loss", "sex", "hours-per-week"]# "race", "native-country"]
     combos = itertools.combinations(allFeatures, N)
     if os.path.isfile(output):
         os.remove(output)
