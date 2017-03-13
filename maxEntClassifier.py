@@ -35,7 +35,7 @@ def getEmpiricals(instances, labels):
     # Normalizes empiricals
     empirical0 /= N
     empirical1 /= N
-    return (empirical1, empirical2)
+    return (empirical0, empirical1)
 
 
 # Given a feature vector, and current weight vectors, returns probability
@@ -65,6 +65,7 @@ def update(instances, weights0, weights1, V, F, N, emp0, emp1):
 
     # Model0, model1 are the feature distributions as per our model given the
     # current weights
+    print(weights0, weights1)
     model0 = np.zeros(F)
     model1 = np.zeros(F)
     for instance in instances:
@@ -83,7 +84,7 @@ def update(instances, weights0, weights1, V, F, N, emp0, emp1):
         except:
             weights0[i] = 0
         try:
-            weights1[i] *= (emp1[i] / model1[i]) ** (1 / V)
+            weights1[i] *=(emp1[i] / model1[i]) ** (1 / V)
         except:
             weights1[i] = 0
 
@@ -107,6 +108,7 @@ def maxEnt(features):
     # Runs 20 iterations of updating weights. We chose 20 iterations because we
     # observed that for any choice of features, the weights would always converge
     # essentially completely after 20 iterations
+    print(beforeTesting)
     for j in range(20):
         weights0, weights1 = update(instances, weights0, weights1, V, F, N, emp0, emp1)
 
