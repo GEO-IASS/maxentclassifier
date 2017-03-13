@@ -142,7 +142,7 @@ def compareN(output, N):
     with open(output, "a") as f:
         for combo in combos:
             afterCorrect, afterError = maxEnt(combo)
-            f.write(str(combo).replace(",", " ") + "," + str(after) + "," + str(afterError) + "\n")
+            f.write(str(combo).replace(",", " ") + "," + str(afterCorrect) + "," + str(afterError) + "\n")
 
 
 ##Displays commandline options
@@ -153,6 +153,7 @@ def getHelp():
         print("  maxEntClassifier.py \t \t \t Classifies using all features. \n")
         print("  maxEntClassifier.py [features]  \t Classifies using specified features. \n")
         print("  maxEntClassifier.py [features] [-w] \t Displays weights while running. \n")
+        print("  maxEntClassifier.py [-c] \t \t Classifies using every possible combination of features.")
 
 
 # Runs maxEnt with the desired features
@@ -172,6 +173,12 @@ def main():
                            "capital-gain", "capital-loss", "race", "native-country", "hours-per-week", "sex"]
             afterCorrect, afterError = maxEnt(allFeatures, withWeights=True)
             print("After Testing Correct: ", afterCorrect, "\t", "After Testing Error: ", afterError)
+
+        elif "-c" == sys.argv[-1]:
+            allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation",
+                           "capital-gain", "capital-loss", "race", "native-country", "hours-per-week", "sex"]
+            for i in range(1, len(allFeatures) + 1):
+                compareN("compare" + str(i) + ".csv", i)
 
         else:
             afterCorrect, afterError = maxEnt(sys.argv[1:])
