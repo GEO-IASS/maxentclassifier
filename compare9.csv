@@ -1,0 +1,10 @@
+('age'  'workclass'  'education'  'education-num'  'marital-status'  'occupation'  'capital-gain'  'capital-loss'  'sex'),0.8426294820717132
+('age'  'workclass'  'education'  'education-num'  'marital-status'  'occupation'  'capital-gain'  'capital-loss'  'hours-per-week'),0.8456839309428951
+('age'  'workclass'  'education'  'education-num'  'marital-status'  'occupation'  'capital-gain'  'sex'  'hours-per-week'),0.8399734395750332
+('age'  'workclass'  'education'  'education-num'  'marital-status'  'occupation'  'capital-loss'  'sex'  'hours-per-week'),0.8324037184594953
+('age'  'workclass'  'education'  'education-num'  'marital-status'  'capital-gain'  'capital-loss'  'sex'  'hours-per-week'),0.8396414342629482
+('age'  'workclass'  'education'  'education-num'  'occupation'  'capital-gain'  'capital-loss'  'sex'  'hours-per-week'),0.8279548472775564
+('age'  'workclass'  'education'  'marital-status'  'occupation'  'capital-gain'  'capital-loss'  'sex'  'hours-per-week'),0.8450199203187251
+('age'  'workclass'  'education-num'  'marital-status'  'occupation'  'capital-gain'  'capital-loss'  'sex'  'hours-per-week'),0.8450199203187251
+('age'  'education'  'education-num'  'marital-status'  'occupation'  'capital-gain'  'capital-loss'  'sex'  'hours-per-week'),0.8432270916334661
+('workclass'  'education'  'education-num'  'marital-status'  'occupation'  'capital-gain'  'capital-loss'  'sex'  'hours-per-week'),0.8424302788844622
