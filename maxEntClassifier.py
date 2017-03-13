@@ -115,7 +115,7 @@ def maxEnt(features, withWeights = False):
     updateNum =1
     #Continues updating weights while average change of weight entry
     #is > 10^(-6)
-    while max(abs(sum(changes0)), abs(sum(changes1))) > .000001 * F and updateNum <= 50:
+    while max(abs(sum(changes0)), abs(sum(changes1))) > .000001 * F and updateNum <= 30:
         oldWeights0, oldWeights1 = np.copy(weights0), np.copy(weights1)
         weights0, weights1= update(instances, weights0, weights1, V, F, N, emp0, emp1)
         changes0 = weights0 - oldWeights0
