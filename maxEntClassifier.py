@@ -105,17 +105,27 @@ def maxEnt(features, withWeights = False):
     emp0, emp1 = getEmpiricals(instances, labels)
     weights0 = np.ones(F)
     weights1 = np.ones(F)
+    changes0 = np.ones(F)
+    changes1 = np.ones(F)
     testingData, testingLabels = load_data("testData.txt", features)
 
     beforeTestingCorrect, beforeTestingError = testTraining(testingData, testingLabels, weights0, weights1)
 
-    # Runs 20 iterations of updating weights. We chose 20 iterations because we
-    # observed that for any choice of features, the weights would always converge
-    # essentially completely after 20 iterations
-    for j in range(20):
-        weights0, weights1 = update(instances, weights0, weights1, V, F, N, emp0, emp1)
+
+    updateNum =1
+    #Continues updating weights while average change of weight entry
+    #is > 10^(-6)
+    while max(abs(sum(changes0)), abs(sum(changes1))) > .000001 * F and updateNum <= 50:
+        oldWeights0, oldWeights1 = np.copy(weights0), np.copy(weights1)
+        weights0, weights1= update(instances, weights0, weights1, V, F, N, emp0, emp1)
+        changes0 = weights0 - oldWeights0
+        changes1 = weights1 - oldWeights1
+
+        updateNum +=1
         if withWeights:
-            print("Update" , j+1 , "\n \n ","w0:", weights0, "\n \n", "w1:" , weights1, "\n \n ")
+
+            print("Update" , updateNum ,"\n \n ","w0:", weights0, "\n \n", "w1:" , weights1, "\n \n ")
+
 
     afterTestingCorrect, afterTestingError = testTraining(testingData, testingLabels, weights0, weights1)
     return afterTestingCorrect, afterTestingError
