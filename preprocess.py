@@ -1,4 +1,5 @@
 import numpy as np
+import glob
 
 
 # Removes all instances that have missing values, and stores remaining
@@ -186,36 +187,29 @@ def processData(filename, features):
     return create_Feature_Vectors(strs, features)
 
 
+# Function for combining all of the csv data files.
+def combineCSVs():
+
+    csvs = glob.glob("*.csv")
+
+    header_saved = False
+    with open('compareAll.csv', 'wb') as w:
+        for csv in csvs:
+            with open(csv, "rb") as r:
+                # header = next(fin)
+                # if not header_saved:
+                #     fout.write(header)
+                #     header_saved = True
+                for line in r:
+                    w.write(line)
+
+
 def main():
     # process_out_null_values("testing.txt", "testData.txt")
     # process_out_null_values("adult.data.txt", "processData.txt")
     strs = getStrings("processData.txt")
 
-    cap_gain = return_Feature_Space(strs, 10)
-
-    for i in range(len(cap_gain)):
-        cap_gain[i] = int(cap_gain[i])
-    print("Average cap_gain = ", sum((cap_gain))/len(cap_gain))
-    sort_cap_gain = sorted(cap_gain)
-    print("Median Value of cap_gain: ", sort_cap_gain[len(cap_gain)//2])
-
-    cap_loss = return_Feature_Space(strs, 11)
-    for i in range(len(cap_loss)):
-        cap_loss[i] = int(cap_loss[i])
-    print("Average cap_loss = ", sum(cap_loss)/len(cap_loss))
-    sort_cap_loss = sorted(cap_loss)
-    print("Median Value of cap_gain: ", sort_cap_loss[len(cap_loss)//2])
-
-    countries = return_all_Features(strs, 13)
-    count = 0
-    for i in range(len(countries)):
-        if countries[i] == "United-States":
-            count+=1
-
-    print("percentage of US citizens in data: ", 100*(count/len(countries)))
-
-
-
+    combineCSVs()
 
 
 if __name__ == "__main__":
