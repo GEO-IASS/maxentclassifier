@@ -110,7 +110,6 @@ def maxEnt(features, withWeights = False):
     # Runs 20 iterations of updating weights. We chose 20 iterations because we
     # observed that for any choice of features, the weights would always converge
     # essentially completely after 20 iterations
-    print(beforeTesting)
     for j in range(20):
         weights0, weights1 = update(instances, weights0, weights1, V, F, N, emp0, emp1)
         if withWeights:
@@ -118,7 +117,7 @@ def maxEnt(features, withWeights = False):
 
 
     afterTesting = testTraining(testingData, testingLabels, weights0, weights1)
-
+    print(afterTesting)
     return beforeTesting, afterTesting
 
 
