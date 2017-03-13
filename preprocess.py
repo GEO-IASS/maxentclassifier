@@ -43,8 +43,9 @@ def createVector(instance, feature_args):
         # Splits age into 10 different sections. Age ranged from 0-99
 
         if "age" == feature:
+            prev_leng = len(vec)
             vec = np.append(vec, np.zeros(10))
-            ageFeat = int(data[0].strip()) // 10
+            ageFeat = prev_leng + int(data[0].strip()) // 10
             vec[ageFeat] = 1
 
         elif "workclass" == feature:
