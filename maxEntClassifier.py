@@ -54,12 +54,14 @@ def getProbs(instance, w0, w1):
 # guesses that are correct
 def testTraining(instances, labels, weights0, weights1):
     correct = 0
+    error = 0
     N = len(instances)
     for i in range(N):
         prob1 = getProbs(instances[i], weights0, weights1)[1]
         guess = int(prob1 > .5)
         correct += int(guess == labels[i])
-    return correct/N
+        error += abs(prob1 - labels[i])
+    return (correct/N, error/N)
 
 
 # Performs a full iteration of maxent, and updates the weights
@@ -95,7 +97,7 @@ def update(instances, weights0, weights1, V, F, N, emp0, emp1):
 
 # Creates and tests a maximum entropy model, given a list of desired features
 def maxEnt(features, withWeights = False):
-    print(features)
+    print("Running maxent with features: " , features)
     instances, labels = load_data("processData.txt", features)
     V = sum(instances[0])
     F = len(instances[0])
@@ -147,16 +149,14 @@ def main():
             print("  maxEntClassifier.py [features] [-w] \t Displays weights while running. \n")
             sys.exit()
 
-        if "-w" == sys.argv[-1] and len(sys.argv) > 2:
+        elif "-w" == sys.argv[-1] and len(sys.argv) > 2:
             before, after = maxEnt(sys.argv[1:-1], withWeights = True)
             print("Before: " , before, "\n" ,"After: " , after)
+
         elif "-w" == sys.argv[-1] and len(sys.argv) == 2:
             allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss", "race", "native-country"]
-            #for i in range(1, len(allFeatures) +1):
-            #    compareN("compare" + str(i) + ".csv", i)
             before, after = maxEnt(allFeatures, withWeights = True)
             print("Before: " , before, "\n" ,"After: " , after)
-            #print(maxEnt(sys.argv[1:]))
 
         else:
             before, after = maxEnt(sys.argv[1:])
@@ -164,8 +164,6 @@ def main():
 
     else:
         allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss", "race", "native-country"]
-        #for i in range(1, len(allFeatures) +1):
-        #    compareN("compare" + str(i) + ".csv", i)
         before, after = maxEnt(allFeatures)
         print("Before: " , before, "\n" ,"After: " , after)
 
