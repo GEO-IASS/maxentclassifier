@@ -113,11 +113,10 @@ def maxEnt(features, withWeights = False):
     for j in range(20):
         weights0, weights1 = update(instances, weights0, weights1, V, F, N, emp0, emp1)
         if withWeights:
-            print("w0:", weights0, "w1:" , weights1)
+            print("Update" , j+1 , "\n \n ","w0:", weights0, "\n \n", "w1:" , weights1, "\n \n ")
 
 
     afterTesting = testTraining(testingData, testingLabels, weights0, weights1)
-    print(afterTesting)
     return beforeTesting, afterTesting
 
 
@@ -140,31 +139,35 @@ def main():
     if len(sys.argv) > 1:
 
         if sys.argv[1] == "--help":
-            print("Run maxEntClassifier.py to compare all features")
-            print("Run maxEntClassifier.py [features] to run on specific features")
-            print("Run maxEntClassifier.py [features] [-w] to display weights while running")
+            print("Usage:")
+            print("  maxEntClassifier.py [features] [options]\n")
+            print("Options: \n")
+            print("  maxEntClassifier.py \t \t \t Classifies using all features. \n")
+            print("  maxEntClassifier.py [features]  \t Classifies using specified features. \n")
+            print("  maxEntClassifier.py [features] [-w] \t Displays weights while running. \n")
             sys.exit()
 
         if "-w" == sys.argv[-1] and len(sys.argv) > 2:
-            print(maxEnt(sys.argv[1:-1], withWeights = True))
+            before, after = maxEnt(sys.argv[1:-1], withWeights = True)
+            print("Before: " , before, "\n" ,"After: " , after)
         elif "-w" == sys.argv[-1] and len(sys.argv) == 2:
             allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss", "race", "native-country"]
             #for i in range(1, len(allFeatures) +1):
             #    compareN("compare" + str(i) + ".csv", i)
             before, after = maxEnt(allFeatures, withWeights = True)
-            print(before,after)
-            print(maxEnt(sys.argv[1:]))
+            print("Before: " , before, "\n" ,"After: " , after)
+            #print(maxEnt(sys.argv[1:]))
 
         else:
             before, after = maxEnt(sys.argv[1:])
-            print(before, after)
+            print("Before: " , before, "\n" ,"After: " , after)
 
     else:
         allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss", "race", "native-country"]
         #for i in range(1, len(allFeatures) +1):
         #    compareN("compare" + str(i) + ".csv", i)
         before, after = maxEnt(allFeatures)
-        print(before,after)
+        print("Before: " , before, "\n" ,"After: " , after)
 
 if __name__ == "__main__":
     main()
