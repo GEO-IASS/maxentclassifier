@@ -67,7 +67,6 @@ def update(instances, weights0, weights1, V, F, N, emp0, emp1):
 
     # Model0, model1 are the feature distributions as per our model given the
     # current weights
-    print(weights0, weights1)
     model0 = np.zeros(F)
     model1 = np.zeros(F)
     for instance in instances:
@@ -110,13 +109,12 @@ def maxEnt(features):
     # Runs 20 iterations of updating weights. We chose 20 iterations because we
     # observed that for any choice of features, the weights would always converge
     # essentially completely after 20 iterations
-    print(beforeTesting)
     for j in range(20):
         weights0, weights1 = update(instances, weights0, weights1, V, F, N, emp0, emp1)
 
 
     afterTesting = testTraining(testingData, testingLabels, weights0, weights1)
-
+    print(afterTesting)
     return beforeTesting, afterTesting
 
 
