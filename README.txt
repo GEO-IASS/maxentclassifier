@@ -1,0 +1,3 @@
+running maxEntClassifier.py on its creates a maximum entropy model that utilizes all possible features
+running maxEntClassifier.py f1 f2 ... creates a maximum entropy model with features f1, f2 ...
+can add flat "-w" at end of commandline, to have the program display the weights while updating
