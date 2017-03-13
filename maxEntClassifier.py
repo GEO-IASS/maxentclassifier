@@ -67,6 +67,7 @@ def update(instances, weights0, weights1, V, F, N, emp0, emp1):
 
     # Model0, model1 are the feature distributions as per our model given the
     # current weights
+
     model0 = np.zeros(F)
     model1 = np.zeros(F)
     for instance in instances:
@@ -93,7 +94,7 @@ def update(instances, weights0, weights1, V, F, N, emp0, emp1):
 
 
 # Creates and tests a maximum entropy model, given a list of desired features
-def maxEnt(features):
+def maxEnt(features, withWeights = False):
     print(features)
     instances, labels = load_data("processData.txt", features)
     V = sum(instances[0])
@@ -111,10 +112,11 @@ def maxEnt(features):
     # essentially completely after 20 iterations
     for j in range(20):
         weights0, weights1 = update(instances, weights0, weights1, V, F, N, emp0, emp1)
+        if withWeights:
+            print("Update" , j+1 , "\n \n ","w0:", weights0, "\n \n", "w1:" , weights1, "\n \n ")
 
 
     afterTesting = testTraining(testingData, testingLabels, weights0, weights1)
-    print(afterTesting)
     return beforeTesting, afterTesting
 
 
@@ -134,17 +136,38 @@ def compareN(output, N):
 
 # Runs maxEnt with the desired features
 def main():
-    if len(sys.argv) == 1:
-        allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss", "race", "native-country"]
-        sig_features = ["workclass", "education", "education-num", "capital-gain", "capital-loss", "occupation"]
+    if len(sys.argv) > 1:
 
-        for i in range(1, len(allFeatures) +1):
-            compareN("compare" + str(i) + ".csv", i)
-        before, after = maxEnt(allFeatures)
-        print(before,after)
+        if sys.argv[1] == "--help":
+            print("Usage:")
+            print("  maxEntClassifier.py [features] [options]\n")
+            print("Options: \n")
+            print("  maxEntClassifier.py \t \t \t Classifies using all features. \n")
+            print("  maxEntClassifier.py [features]  \t Classifies using specified features. \n")
+            print("  maxEntClassifier.py [features] [-w] \t Displays weights while running. \n")
+            sys.exit()
+
+        if "-w" == sys.argv[-1] and len(sys.argv) > 2:
+            before, after = maxEnt(sys.argv[1:-1], withWeights = True)
+            print("Before: " , before, "\n" ,"After: " , after)
+        elif "-w" == sys.argv[-1] and len(sys.argv) == 2:
+            allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss", "race", "native-country"]
+            #for i in range(1, len(allFeatures) +1):
+            #    compareN("compare" + str(i) + ".csv", i)
+            before, after = maxEnt(allFeatures, withWeights = True)
+            print("Before: " , before, "\n" ,"After: " , after)
+            #print(maxEnt(sys.argv[1:]))
+
+        else:
+            before, after = maxEnt(sys.argv[1:])
+            print("Before: " , before, "\n" ,"After: " , after)
 
     else:
-        print(maxEnt(sys.argv[1:]))
+        allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss", "race", "native-country"]
+        #for i in range(1, len(allFeatures) +1):
+        #    compareN("compare" + str(i) + ".csv", i)
+        before, after = maxEnt(allFeatures)
+        print("Before: " , before, "\n" ,"After: " , after)
 
 if __name__ == "__main__":
     main()
