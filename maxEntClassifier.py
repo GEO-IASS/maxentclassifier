@@ -135,18 +135,23 @@ def compareN(output, N):
             before, after = maxEnt(combo)
             f.write(str(combo).replace(",", " ") + "," + str(after) + "\n")
 
+def getHelp():
+        print("Usage:")
+        print("  maxEntClassifier.py [features] [options]\n")
+        print("Options: \n")
+        print("  maxEntClassifier.py \t \t \t Classifies using all features. \n")
+        print("  maxEntClassifier.py [features]  \t Classifies using specified features. \n")
+        print("  maxEntClassifier.py [features] [-w] \t Displays weights while running. \n")
+
+
+
 
 # Runs maxEnt with the desired features
 def main():
     if len(sys.argv) > 1:
 
         if sys.argv[1] == "--help":
-            print("Usage:")
-            print("  maxEntClassifier.py [features] [options]\n")
-            print("Options: \n")
-            print("  maxEntClassifier.py \t \t \t Classifies using all features. \n")
-            print("  maxEntClassifier.py [features]  \t Classifies using specified features. \n")
-            print("  maxEntClassifier.py [features] [-w] \t Displays weights while running. \n")
+            getHelp()
             sys.exit()
 
         elif "-w" == sys.argv[-1] and len(sys.argv) > 2:
