@@ -135,6 +135,7 @@ def compareN(output, N):
             before, after = maxEnt(combo)
             f.write(str(combo).replace(",", " ") + "," + str(after) + "\n")
 
+##Displays commandline options
 def getHelp():
         print("Usage:")
         print("  maxEntClassifier.py [features] [options]\n")
