@@ -118,7 +118,7 @@ def maxEnt(features, withWeights = False):
             print("Update" , j+1 , "\n \n ","w0:", weights0, "\n \n", "w1:" , weights1, "\n \n ")
 
     afterTestingCorrect, afterTestingError = testTraining(testingData, testingLabels, weights0, weights1)
-    return beforeTestingCorrect, afterTestingCorrect
+    return afterTestingCorrect, afterTestingError
 
 
 # Runs maxent on all possible combinations of N features, and writes results to
@@ -131,8 +131,8 @@ def compareN(output, N):
         os.remove(output)
     with open(output, "a") as f:
         for combo in combos:
-            before, after = maxEnt(combo)
-            f.write(str(combo).replace(",", " ") + "," + str(after) + "\n")
+            afterCorrect, afterError = maxEnt(combo)
+            f.write(str(combo).replace(",", " ") + "," + str(after) + "," + str(afterError) + "\n")
 
 
 ##Displays commandline options
@@ -154,24 +154,25 @@ def main():
             sys.exit()
 
         elif "-w" == sys.argv[-1] and len(sys.argv) > 2:
-            before, after = maxEnt(sys.argv[1:-1], withWeights=True)
-            print("Before: " , before, "\n" ,"After: " , after)
+            afterCorrect, afterError = maxEnt(sys.argv[1:-1], withWeights=True)
+            print("After Testing Correct: ", afterCorrect, "\t", "After Testing Error: ", afterError)
 
         elif "-w" == sys.argv[-1] and len(sys.argv) == 2:
             allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation",
                            "capital-gain", "capital-loss", "race", "native-country", "hours-per-week", "sex"]
-            before, after = maxEnt(allFeatures, withWeights=True)
-            print("Before: ", before, "\n", "After: " , after)
+            afterCorrect, afterError = maxEnt(allFeatures, withWeights=True)
+            print("After Testing Correct: ", afterCorrect, "\t", "After Testing Error: ", afterError)
 
         else:
-            before, after = maxEnt(sys.argv[1:])
-            print("Before: ", before, "\n", "After: ", after)
+            afterCorrect, afterError = maxEnt(sys.argv[1:])
+            print("After Testing Correct: ", afterCorrect, "\t", "After Testing Error: ", afterError)
 
     else:
         allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
                        "capital-loss", "race", "native-country", "hours-per-week", "sex"]
-        before, after = maxEnt(allFeatures)
-        print("Before: " , before, "\n" ,"After: " , after)
+        afterCorrect, afterError = maxEnt(allFeatures)
+        print("After Testing Correct: ", afterCorrect, "\t", "After Testing Error: ", afterError)
+
 
 if __name__ == "__main__":
     main()
