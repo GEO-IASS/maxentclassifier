@@ -35,7 +35,7 @@ def getEmpiricals(instances, labels):
     # Normalizes empiricals
     empirical0 /= N
     empirical1 /= N
-    return (empirical0, empirical1)
+    return empirical0, empirical1
 
 
 # Given a feature vector, and current weight vectors, returns probability
@@ -47,7 +47,7 @@ def getProbs(instance, w0, w1):
     prob0 = np.exp(np.dot(instance, w0))
     prob1 = np.exp(np.dot(instance, w1))
     const = prob0 + prob1
-    return(prob0/ const, prob1/const)
+    return prob0 / const, prob1 / const
 
 
 # Classifies feature vectors from instances, and returns the proportion of
@@ -61,7 +61,7 @@ def testTraining(instances, labels, weights0, weights1):
         guess = int(prob1 > .5)
         correct += int(guess == labels[i])
         error += abs(prob1 - labels[i])
-    return (correct/N, error/N)
+    return correct/N, error/N
 
 
 # Performs a full iteration of maxent, and updates the weights
@@ -107,7 +107,7 @@ def maxEnt(features, withWeights = False):
     weights1 = np.ones(F)
     testingData, testingLabels = load_data("testData.txt", features)
 
-    beforeTesting = testTraining(testingData, testingLabels, weights0, weights1)
+    beforeTestingCorrect, beforeTestingError = testTraining(testingData, testingLabels, weights0, weights1)
 
     # Runs 20 iterations of updating weights. We chose 20 iterations because we
     # observed that for any choice of features, the weights would always converge
@@ -117,16 +117,15 @@ def maxEnt(features, withWeights = False):
         if withWeights:
             print("Update" , j+1 , "\n \n ","w0:", weights0, "\n \n", "w1:" , weights1, "\n \n ")
 
-
-    afterTesting = testTraining(testingData, testingLabels, weights0, weights1)
-    return beforeTesting, afterTesting
+    afterTestingCorrect, afterTestingError = testTraining(testingData, testingLabels, weights0, weights1)
+    return beforeTestingCorrect, afterTestingCorrect
 
 
 # Runs maxent on all possible combinations of N features, and writes results to
 # the desired output file
 def compareN(output, N):
     allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
-                   "capital-loss", "sex", "hours-per-week"]# "race", "native-country"]
+                   "capital-loss", "race", "native-country", "hours-per-week", "sex"]
     combos = itertools.combinations(allFeatures, N)
     if os.path.isfile(output):
         os.remove(output)
@@ -134,6 +133,7 @@ def compareN(output, N):
         for combo in combos:
             before, after = maxEnt(combo)
             f.write(str(combo).replace(",", " ") + "," + str(after) + "\n")
+
 
 ##Displays commandline options
 def getHelp():
@@ -145,8 +145,6 @@ def getHelp():
         print("  maxEntClassifier.py [features] [-w] \t Displays weights while running. \n")
 
 
-
-
 # Runs maxEnt with the desired features
 def main():
     if len(sys.argv) > 1:
@@ -156,20 +154,22 @@ def main():
             sys.exit()
 
         elif "-w" == sys.argv[-1] and len(sys.argv) > 2:
-            before, after = maxEnt(sys.argv[1:-1], withWeights = True)
+            before, after = maxEnt(sys.argv[1:-1], withWeights=True)
             print("Before: " , before, "\n" ,"After: " , after)
 
         elif "-w" == sys.argv[-1] and len(sys.argv) == 2:
-            allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss", "race", "native-country"]
-            before, after = maxEnt(allFeatures, withWeights = True)
-            print("Before: " , before, "\n" ,"After: " , after)
+            allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation",
+                           "capital-gain", "capital-loss", "race", "native-country", "hours-per-week", "sex"]
+            before, after = maxEnt(allFeatures, withWeights=True)
+            print("Before: ", before, "\n", "After: " , after)
 
         else:
             before, after = maxEnt(sys.argv[1:])
-            print("Before: " , before, "\n" ,"After: " , after)
+            print("Before: ", before, "\n", "After: ", after)
 
     else:
-        allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain", "capital-loss", "race", "native-country"]
+        allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
+                       "capital-loss", "race", "native-country", "hours-per-week", "sex"]
         before, after = maxEnt(allFeatures)
         print("Before: " , before, "\n" ,"After: " , after)
 
