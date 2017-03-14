@@ -1,0 +1,12 @@
+('age'  'workclass'  'education'  'education-num'  'marital-status'  'occupation'  'capital-gain'  'capital-loss'  'race'  'native-country'  'hours-per-week'),0.8457503320053121,0.223766710761
+('age'  'workclass'  'education'  'education-num'  'marital-status'  'occupation'  'capital-gain'  'capital-loss'  'race'  'native-country'  'sex'),0.8435590969455511,0.22508402995
+('age'  'workclass'  'education'  'education-num'  'marital-status'  'occupation'  'capital-gain'  'capital-loss'  'race'  'hours-per-week'  'sex'),0.8456175298804781,0.222778196908
+('age'  'workclass'  'education'  'education-num'  'marital-status'  'occupation'  'capital-gain'  'capital-loss'  'native-country'  'hours-per-week'  'sex'),0.8457503320053121,0.222790963953
+('age'  'workclass'  'education'  'education-num'  'marital-status'  'occupation'  'capital-gain'  'race'  'native-country'  'hours-per-week'  'sex'),0.8407038512616202,0.227194055395
+('age'  'workclass'  'education'  'education-num'  'marital-status'  'occupation'  'capital-loss'  'race'  'native-country'  'hours-per-week'  'sex'),0.8326693227091634,0.236467871726
+('age'  'workclass'  'education'  'education-num'  'marital-status'  'capital-gain'  'capital-loss'  'race'  'native-country'  'hours-per-week'  'sex'),0.8397742363877823,0.228243698696
+('age'  'workclass'  'education'  'education-num'  'occupation'  'capital-gain'  'capital-loss'  'race'  'native-country'  'hours-per-week'  'sex'),0.8288844621513944,0.249251967397
+('age'  'workclass'  'education'  'marital-status'  'occupation'  'capital-gain'  'capital-loss'  'race'  'native-country'  'hours-per-week'  'sex'),0.8456839309428951,0.224438944984
+('age'  'workclass'  'education-num'  'marital-status'  'occupation'  'capital-gain'  'capital-loss'  'race'  'native-country'  'hours-per-week'  'sex'),0.8456839309428951,0.224438944984
+('age'  'education'  'education-num'  'marital-status'  'occupation'  'capital-gain'  'capital-loss'  'race'  'native-country'  'hours-per-week'  'sex'),0.8438911022576361,0.223762690076
+('workclass'  'education'  'education-num'  'marital-status'  'occupation'  'capital-gain'  'capital-loss'  'race'  'native-country'  'hours-per-week'  'sex'),0.8420318725099601,0.229032211202
