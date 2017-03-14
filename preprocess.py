@@ -269,7 +269,7 @@ def main():
     # process_out_null_values("testing.txt", "testData.txt")
     # process_out_null_values("adult.data.txt", "processData.txt")
     strs = getStrings("processData.txt")
-
+    
     combineCSVs()
 
 
