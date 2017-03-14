@@ -134,7 +134,7 @@ def createVector(instance, feature_args):
         elif "native-country" == feature:
             prev_leng = len(vec)
             vec = np.append(vec, np.zeros(2))
-            nc_feat = int(data[11].strip() == "United-States")
+            nc_feat = int(data[13].strip() == "United-States")
             nc_feat += prev_leng
             vec[nc_feat] = 1
 

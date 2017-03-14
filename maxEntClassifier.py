@@ -176,7 +176,7 @@ def main():
         elif "-c" == sys.argv[-1]:
             allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation",
                            "capital-gain", "capital-loss", "race", "native-country", "hours-per-week", "sex"]
-            for i in range(1, len(allFeatures) + 1):
+            for i in range(7, len(allFeatures) + 1):
                 compareN("compare" + str(i) + ".csv", i)
 
         else:
