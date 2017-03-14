@@ -30,6 +30,65 @@ def getStrings(filename):
     return lines
 
 
+def get_data_index(features):
+    indices = {"age":0, "workclass":1, "education":3, "education-num":4, "marital-status":5, "occupation":6,
+               "race":8, "sex":9, "capital-gain":10, "capital-loss":11, "hours-per-week":12, "native-country":13 }
+
+    results = []
+    for feature in features:
+        results.append(indices[feature])
+    return results
+
+def generate_joint_feature_Vector(vec, jointFeatureString, data):
+    prev_leng = len(vec)
+    workclass = ["Private", "Self-emp-not-inc", "Self-emp-inc", "Federal-gov", "Local-gov", "State-gov",
+                   "Without-pay", "Never-worked"]
+    education = ["Bachelors", "Some-college", "11th", "HS-grad", "Prof-school", "Assoc-acdm", "Assoc-voc", "9th",
+                 "7th-8th", "12th", "Masters", "1st-4th", "10th", "Doctorate", "5th-6th", "Preschool"]
+    marital_status = ['Never-married', 'Married-civ-spouse', 'Divorced', 'Married-spouse-absent', 'Separated',
+                        'Married-AF-spouse', 'Widowed']
+    occupation = ['Adm-clerical', 'Exec-managerial', 'Handlers-cleaners', 'Prof-specialty', 'Other-service', 'Sales',
+                   'Transport-moving', 'Farming-fishing', 'Machine-op-inspct', 'Tech-support', 'Craft-repair',
+                   'Protective-serv', 'Armed-Forces', 'Priv-house-serv']
+    sex = ["Female", "Male"]
+    race = ["White", "Asian-Pac-Islander", "Amer-Indian-Eskimo", "Other", "Black"]
+    age = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    hours_per_week = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    native_countries = [0,1]
+    education_num = range(17)
+    cap_gain = [0,1]
+    cap_loss = [0,1]
+
+
+    allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
+                   "capital-loss", "race", "native-country", "hours-per-week", "sex"]
+
+    feature_spaces = {}
+
+    # for feature in allFeatures:
+    #     feature_spaces[feature]
+
+
+    # TODO: make feature_spaces list where each inner list is at the index that corresponds to the get_feature_index num
+    # TODO: figure out how to handle cap-gain, cap-loss, native-country, and education-num
+
+    features = jointFeatureString.split("&")
+
+    lengths = {"workclass":len(workclass), "education":len(education), "marital_status":len(marital_status), "occupation": len(occupation),
+               "sex":len(sex), "race":len(race), "age":len(age), "education-num": 17, "capital-gain": 2, "capital-loss": 2, "hours-per-week":
+                   len(hours_per_week), "native-country":2}
+
+    indices = get_data_index(features)
+    len0 = lengths[features[0]]
+    len1 = lengths[features[1]]
+
+
+    # If the features are cap-gain, cap-loss, native-country, or education-num, do something special
+    # for feature_value0 in feature_spaces
+
+
+    return vec
+
 # Input: a list of the features we will be adding to the feature vector
 
 def createVector(instance, feature_args):
@@ -41,8 +100,11 @@ def createVector(instance, feature_args):
     for feature in feature_args:
 
         # Splits age into 10 different sections. Age ranged from 0-99
+        if "&" in feature:
+            new_vec = generate_joint_feature_Vector(vec, feature, data)
+            vec = new_vec
 
-        if "age" == feature:
+        elif "age" == feature:
             prev_leng = len(vec)
             vec = np.append(vec, np.zeros(10))
             ageFeat = prev_leng + int(data[0].strip()) // 10
@@ -72,7 +134,7 @@ def createVector(instance, feature_args):
 
         elif "marital-status" == feature:
             marital_statuses = ['Never-married', 'Married-civ-spouse', 'Divorced', 'Married-spouse-absent', 'Separated',
-                        'Married-AF-spouse', 'Widowed']
+                                'Married-AF-spouse', 'Widowed']
             prev_leng = len(vec)
             vec = np.append(vec, np.zeros(len(marital_statuses)))
             marital_feat = prev_leng + marital_statuses.index(data[5].strip())

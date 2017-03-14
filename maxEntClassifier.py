@@ -111,7 +111,7 @@ def maxEnt(features, withWeights = False):
 
     beforeTestingCorrect, beforeTestingError = testTraining(testingData, testingLabels, weights0, weights1)
 
-    updateNum =1
+    updateNum =0
     #Continues updating weights while average change of weight entry
     #is > 10^(-6)
     while max(abs(sum(changes0)), abs(sum(changes1))) > .000001 * F and updateNum <= 30:
