@@ -154,19 +154,22 @@ def compareJointToSingles(combos):
 
             singlesCorrect, singlesError = maxEnt(singles)
 
-            w.write("Combo" + "," + str(combo) + "," + str(comboCorrect) + "," + str(comboError) + "\n")
+            w.write("Combo" + "," + str(comboToAppend) + "," + str(comboCorrect) + "," + str(comboError) + "\n")
             w.write("Singles" + "," + str(singles).replace(",", " ") + "," + str(singlesCorrect) + "," + str(singlesError) + "\n")
 
 
 #Displays commandline options
 def getHelp():
+        print("\n")
         print("Usage:")
         print("  maxEntClassifier.py [features] [options]\n")
         print("Options: \n")
+        print("  maxEntClassifier.py [--features] \t Lists all possible features. \n")
         print("  maxEntClassifier.py \t \t \t Classifies using all features. \n")
         print("  maxEntClassifier.py [features]  \t Classifies using specified features. \n")
         print("  maxEntClassifier.py [features] [-w] \t Displays weights while running. \n")
-        print("  maxEntClassifier.py [-c] \t \t Classifies using every possible combination of features.")
+        print("  maxEntClassifier.py [-c] \t \t Classifies using every possible combination of non-joint features.\n")
+        print("  maxEntClassifier.py [-cs] \t \t Compares set of individual features to set of joint features.\n")
 
 
 # Runs maxEnt with the desired features
@@ -176,6 +179,12 @@ def main():
         if sys.argv[1] == "--help":
             getHelp()
             sys.exit()
+
+        elif sys.argv[-1] == "--features":
+            allFeatures = "Possible Features include: age, workclass, education, education-num, marital-status, occupation, capital-gain, capital-loss, race, native-country, hours-per-week, and sex. \n"
+            print("\n")
+            print(allFeatures)
+            print("Currently, only workclass, sex, education, marital-status, occupation, and race are available as joint-features.\n")
 
         elif "-w" == sys.argv[-1] and len(sys.argv) > 2:
             afterCorrect, afterError = maxEnt(sys.argv[1:-1], withWeights=True)
@@ -190,8 +199,22 @@ def main():
         elif "-c" == sys.argv[-1]:
             allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation",
                            "capital-gain", "capital-loss", "race", "native-country", "hours-per-week", "sex"]
-            for i in range(1, 4):
+            for i in range(1, len(allFeatures)):
                 compareN("compare" + str(i) + ".csv", i)
+
+        elif "-cs" == sys.argv[-1]:
+            jointable_features = ["workclass", "education", "marital-status", "occupation", "sex", "race"]
+
+            jointable_combos = list(itertools.combinations(jointable_features, 2))
+            combos = []
+            for combo in jointable_combos:
+                comboToAppend = str(combo[0]) + "+" + str(combo[1])
+                combos.append(comboToAppend)
+            afterCorrect, afterError = maxEnt(jointable_features)
+            jointCorrect, jointError = maxEnt(combos)
+            print("After allFeatures Correct: ", afterCorrect, "\t", "After allFeatures Error: ", afterError)
+            print("After jointFeatures Correct: ", jointCorrect, "\t", "After jointFeatures Error: ", jointError)
+
 
         else:
             afterCorrect, afterError = maxEnt(sys.argv[1:])
@@ -200,16 +223,16 @@ def main():
     else:
         allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
                        "capital-loss", "race", "native-country", "hours-per-week", "sex"]
-        jointable_features = ["workclass", "education", "marital-status", "occupation", "sex", "race"]
+        # jointable_features = ["workclass", "education", "marital-status", "occupation", "sex", "race"]
 
-        jointable_combos = list(itertools.combinations(jointable_features, 2))
+        # jointable_combos = list(itertools.combinations(jointable_features, 2))
 
-        compareJointToSingles(jointable_combos)
+        # compareJointToSingles(jointable_combos)
         # for combo in jointable_combos:
         #     comboToAppend = str(combo[0]) + "+" + str(combo[1])
         #     allFeatures.append(comboToAppend)
-        # afterCorrect, afterError = maxEnt(allFeatures)
-        # print("After Testing Correct: ", afterCorrect, "\t", "After Testing Error: ", afterError)
+        afterCorrect, afterError = maxEnt(allFeatures)
+        print("After Testing Correct: ", afterCorrect, "\t", "After Testing Error: ", afterError)
 
 
 if __name__ == "__main__":
