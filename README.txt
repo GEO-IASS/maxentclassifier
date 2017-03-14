@@ -29,7 +29,7 @@ WARNING: This will take a REALLY long time. Don't run this unless you don't want
 1) No auxiliary data files or modules should be needed. processData.txt and testData.txt are
    the training and testing data that the program uses. These are edited to not include instances
    with missing entries. adult.data.txt and testing.txt are the original training and testing files.
-   The other files are for our data analysis and should be ignored.
+   Any other files are for our data analysis and should be ignored.
 
 2) If joint features currently only include workclass, sex, education, marital-status, occupation, and race so if
    you try to run it with other features, it will do it's best but inevitably not give you what you want.
