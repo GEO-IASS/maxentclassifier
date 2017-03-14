@@ -39,7 +39,7 @@ def get_data_index(features):
         results.append(indices[feature])
     return results
 
-def generate_joint_feature_Vector(vec, jointFeatureString, data):
+def generate_joint_feature_Vector(vec, jointFeatureString):
     prev_leng = len(vec)
     workclass = ["Private", "Self-emp-not-inc", "Self-emp-inc", "Federal-gov", "Local-gov", "State-gov",
                    "Without-pay", "Never-worked"]
@@ -60,13 +60,9 @@ def generate_joint_feature_Vector(vec, jointFeatureString, data):
     cap_loss = [0,1]
 
 
-    allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
-                   "capital-loss", "race", "native-country", "hours-per-week", "sex"]
-
-    feature_spaces = {}
-
-    # for feature in allFeatures:
-    #     feature_spaces[feature]
+    feature_spaces = {"workclass": workclass, "education":education, "marital_status":marital_status, "occupation": occupation,
+               "sex":sex, "race":race, "age":age, "education-num": education_num, "capital-gain": cap_gain, "capital-loss": cap_loss, "hours-per-week":
+                   hours_per_week, "native-country":native_countries}
 
 
     # TODO: make feature_spaces list where each inner list is at the index that corresponds to the get_feature_index num
@@ -81,6 +77,8 @@ def generate_joint_feature_Vector(vec, jointFeatureString, data):
     indices = get_data_index(features)
     len0 = lengths[features[0]]
     len1 = lengths[features[1]]
+    feature_space0 = feature_spaces[features[0]]
+    feature_space1 = feature_spaces[features[1]]
 
 
     # If the features are cap-gain, cap-loss, native-country, or education-num, do something special
