@@ -41,8 +41,6 @@ def getEmpiricals(instances, labels):
 # Given a feature vector, and current weight vectors, returns probability
 # that instance is from class 0 or class 1
 def getProbs(instance, w0, w1):
-    # print("w0 :", w0, " w1: ", w1)
-    # print("\n")
 
     prob0 = np.exp(np.dot(instance, w0))
     prob1 = np.exp(np.dot(instance, w1))
@@ -109,8 +107,6 @@ def maxEnt(features, withWeights = False):
     changes1 = np.ones(F)
     testingData, testingLabels = load_data("testData.txt", features)
 
-    beforeTestingCorrect, beforeTestingError = testTraining(testingData, testingLabels, weights0, weights1)
-
     updateNum =0
     #Continues updating weights while average change of weight entry
     #is > 10^(-6)
@@ -143,6 +139,8 @@ def compareN(output, N):
             afterCorrect, afterError = maxEnt(combo)
             f.write(str(combo).replace(",", " ") + "," + str(afterCorrect) + "," + str(afterError) + "\n")
 
+
+# Compares all possible joint features with all the set of single features the joint features are generated from.
 def compareJointToSingles(combos):
     if os.path.isfile("combosVsSingles.csv"):
         os.remove("combosVsSingles.csv")
@@ -158,7 +156,7 @@ def compareJointToSingles(combos):
             w.write("Singles" + "," + str(singles).replace(",", " ") + "," + str(singlesCorrect) + "," + str(singlesError) + "\n")
 
 
-#Displays commandline options
+# Displays commandline options
 def getHelp():
         print("\n")
         print("Usage:")
@@ -223,14 +221,7 @@ def main():
     else:
         allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
                        "capital-loss", "race", "native-country", "hours-per-week", "sex"]
-        # jointable_features = ["workclass", "education", "marital-status", "occupation", "sex", "race"]
 
-        # jointable_combos = list(itertools.combinations(jointable_features, 2))
-
-        # compareJointToSingles(jointable_combos)
-        # for combo in jointable_combos:
-        #     comboToAppend = str(combo[0]) + "+" + str(combo[1])
-        #     allFeatures.append(comboToAppend)
         afterCorrect, afterError = maxEnt(allFeatures)
         print("After Testing Correct: ", afterCorrect, "\t", "After Testing Error: ", afterError)
 
