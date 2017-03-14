@@ -54,10 +54,10 @@ def generate_joint_feature_Vector(vec, jointFeatureString, data):
     race = ["White", "Asian-Pac-Islander", "Amer-Indian-Eskimo", "Other", "Black"]
     age = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     hours_per_week = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-    native_country = [0,1]
-    education-num = range(17)
-    cap-gain = [0,1]
-    cap-loss = [0,1]
+    native_countries = [0,1]
+    education_num = range(17)
+    cap_gain = [0,1]
+    cap_loss = [0,1]
 
 
     allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
@@ -65,8 +65,8 @@ def generate_joint_feature_Vector(vec, jointFeatureString, data):
 
     feature_spaces = {}
 
-    for feature in allFeatures:
-        feature_spaces[feature] =
+    # for feature in allFeatures:
+    #     feature_spaces[feature]
 
 
     # TODO: make feature_spaces list where each inner list is at the index that corresponds to the get_feature_index num
@@ -84,7 +84,7 @@ def generate_joint_feature_Vector(vec, jointFeatureString, data):
 
 
     # If the features are cap-gain, cap-loss, native-country, or education-num, do something special
-    for feature_value0 in feature_spaces
+    # for feature_value0 in feature_spaces
 
 
     return vec
@@ -105,8 +105,9 @@ def createVector(instance, feature_args):
             vec = new_vec
 
         elif "age" == feature:
+            prev_leng = len(vec)
             vec = np.append(vec, np.zeros(10))
-            ageFeat = int(data[0].strip()) // 10
+            ageFeat = prev_leng + int(data[0].strip()) // 10
             vec[ageFeat] = 1
 
         elif "workclass" == feature:

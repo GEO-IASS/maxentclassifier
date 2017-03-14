@@ -111,7 +111,6 @@ def maxEnt(features, withWeights = False):
 
     beforeTestingCorrect, beforeTestingError = testTraining(testingData, testingLabels, weights0, weights1)
 
-
     updateNum =0
     #Continues updating weights while average change of weight entry
     #is > 10^(-6)
@@ -121,10 +120,10 @@ def maxEnt(features, withWeights = False):
         changes0 = weights0 - oldWeights0
         changes1 = weights1 - oldWeights1
 
-        updateNum +=1
         if withWeights:
 
             print("Update" , updateNum ,"\n \n ","w0:", weights0, "\n \n", "w1:" , weights1, "\n \n ")
+        updateNum +=1
 
 
     afterTestingCorrect, afterTestingError = testTraining(testingData, testingLabels, weights0, weights1)
@@ -177,7 +176,7 @@ def main():
         elif "-c" == sys.argv[-1]:
             allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation",
                            "capital-gain", "capital-loss", "race", "native-country", "hours-per-week", "sex"]
-            for i in range(1, len(allFeatures) + 1):
+            for i in range(7, len(allFeatures) + 1):
                 compareN("compare" + str(i) + ".csv", i)
 
         else:
