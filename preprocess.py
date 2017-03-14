@@ -39,7 +39,7 @@ def get_data_index(features):
         results.append(indices[feature])
     return results
 
-def generate_joint_feature_Vector(vec, jointFeatureString):
+def generate_joint_feature_Vector(vec, jointFeatureString, data):
     prev_leng = len(vec)
     workclass = ["Private", "Self-emp-not-inc", "Self-emp-inc", "Federal-gov", "Local-gov", "State-gov",
                    "Without-pay", "Never-worked"]
@@ -60,17 +60,14 @@ def generate_joint_feature_Vector(vec, jointFeatureString):
     cap_loss = [0,1]
 
 
-    feature_spaces = {"workclass": workclass, "education":education, "marital_status":marital_status, "occupation": occupation,
+    feature_spaces = {"workclass": workclass, "education":education, "marital-status":marital_status, "occupation": occupation,
                "sex":sex, "race":race, "age":age, "education-num": education_num, "capital-gain": cap_gain, "capital-loss": cap_loss, "hours-per-week":
                    hours_per_week, "native-country":native_countries}
 
 
-    # TODO: make feature_spaces list where each inner list is at the index that corresponds to the get_feature_index num
-    # TODO: figure out how to handle cap-gain, cap-loss, native-country, and education-num
+    features = jointFeatureString.split("+")
 
-    features = jointFeatureString.split("&")
-
-    lengths = {"workclass":len(workclass), "education":len(education), "marital_status":len(marital_status), "occupation": len(occupation),
+    lengths = {"workclass":len(workclass), "education":len(education), "marital-status":len(marital_status), "occupation": len(occupation),
                "sex":len(sex), "race":len(race), "age":len(age), "education-num": 17, "capital-gain": 2, "capital-loss": 2, "hours-per-week":
                    len(hours_per_week), "native-country":2}
 
@@ -79,11 +76,28 @@ def generate_joint_feature_Vector(vec, jointFeatureString):
     len1 = lengths[features[1]]
     feature_space0 = feature_spaces[features[0]]
     feature_space1 = feature_spaces[features[1]]
+    joint_index = 0
+
+    special_features = ["capital-gain", "capital-loss", "native-country", "age", "hours-per-week", "education-num"]
 
 
-    # If the features are cap-gain, cap-loss, native-country, or education-num, do something special
-    # for feature_value0 in feature_spaces
+    # If the features are cap-gain, cap-loss, native-country, or education-num, age, or hours-per-week, we skip it
 
+
+    for i in range(len0):
+        for j in range(len1):
+            vec = np.append(vec, np.zeros(1))
+
+    # Works for workclass, education, marital-status, occupation, sex, race,
+
+    if features[0] not in special_features and features[1] not in special_features:
+        index_0 = feature_space0.index(data[indices[0]].strip())
+        index_1 = feature_space1.index(data[indices[1]].strip())
+
+        joint_index = prev_leng + (lengths[features[1]] * index_0) + index_1
+
+
+    vec[joint_index] = 1
 
     return vec
 
@@ -98,7 +112,7 @@ def createVector(instance, feature_args):
     for feature in feature_args:
 
         # Splits age into 10 different sections. Age ranged from 0-99
-        if "&" in feature:
+        if "+" in feature:
             new_vec = generate_joint_feature_Vector(vec, feature, data)
             vec = new_vec
 

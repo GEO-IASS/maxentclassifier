@@ -143,8 +143,22 @@ def compareN(output, N):
             afterCorrect, afterError = maxEnt(combo)
             f.write(str(combo).replace(",", " ") + "," + str(afterCorrect) + "," + str(afterError) + "\n")
 
+def compareJointToSingles(combos):
+    if os.path.isfile("combosVsSingles.csv"):
+        os.remove("combosVsSingles.csv")
+    with open("combosVsSingles.csv", "a") as w:
+        for combo in combos:
+            comboToAppend = str(combo[0]) + "+" + str(combo[1])
+            comboCorrect, comboError = maxEnt([comboToAppend])
+            singles = [combo[0], combo[1]]
 
-##Displays commandline options
+            singlesCorrect, singlesError = maxEnt(singles)
+
+            w.write("Combo" + "," + str(combo) + "," + str(comboCorrect) + "," + str(comboError) + "\n")
+            w.write("Singles" + "," + str(singles).replace(",", " ") + "," + str(singlesCorrect) + "," + str(singlesError) + "\n")
+
+
+#Displays commandline options
 def getHelp():
         print("Usage:")
         print("  maxEntClassifier.py [features] [options]\n")
@@ -186,8 +200,16 @@ def main():
     else:
         allFeatures = ["age", "workclass", "education", "education-num", "marital-status", "occupation", "capital-gain",
                        "capital-loss", "race", "native-country", "hours-per-week", "sex"]
-        afterCorrect, afterError = maxEnt(allFeatures)
-        print("After Testing Correct: ", afterCorrect, "\t", "After Testing Error: ", afterError)
+        jointable_features = ["workclass", "education", "marital-status", "occupation", "sex", "race"]
+
+        jointable_combos = list(itertools.combinations(jointable_features, 2))
+
+        compareJointToSingles(jointable_combos)
+        # for combo in jointable_combos:
+        #     comboToAppend = str(combo[0]) + "+" + str(combo[1])
+        #     allFeatures.append(comboToAppend)
+        # afterCorrect, afterError = maxEnt(allFeatures)
+        # print("After Testing Correct: ", afterCorrect, "\t", "After Testing Error: ", afterError)
 
 
 if __name__ == "__main__":
