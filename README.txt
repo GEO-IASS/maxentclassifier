@@ -19,6 +19,7 @@ If you run "maxEntClassifier.py -cs", it will compare a set of individual featur
 generated from those individual features.
 
 If you run "maxEntClassifier.py -c", it will compare all possible combinations of all non-joint features.
+Additionally, it will write the results to ".csv" files.
 WARNING: This will take a REALLY long time. Don't run this unless you don't want to use your computer for another
          three days.
 
